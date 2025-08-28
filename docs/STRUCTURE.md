@@ -8,6 +8,10 @@ Follows Screaming Architecture and Separation of Concerns principles.
 │  ├─ ArchetypeCSharpCLI/            # CLI application (presentation layer)
 │  │  ├─ ArchetypeCSharpCLI.csproj
 │  │  ├─ Program.cs
+│  │  ├─ Configuration/              # F3.1 configuration pipeline
+│  │  │  ├─ AppConfig.cs            # Typed config POCO with defaults
+│  │  │  ├─ AppSettings.cs          # Cached accessor to current AppConfig
+│  │  │  └─ ConfigBuilder.cs        # Builds IConfiguration/AppConfig from files+env
 │  │  └─ Commands/
 │  │     ├─ CommandFactory.cs       # Builds root parser and subcommands
 │  │     └─ Hello/
@@ -16,7 +20,8 @@ Follows Screaming Architecture and Separation of Concerns principles.
 │  └─ ArchetypeCSharpCLI.Tests/      # Test project
 │     ├─ ArchetypeCSharpCLI.Tests.csproj
 │     ├─ CliHostTests.cs             # Host-level help/version tests
-│     └─ CommandRoutingTests.cs      # F1.2 routing & validation tests
+│     ├─ CommandRoutingTests.cs      # F1.2 routing & validation tests
+│     └─ ConfigPipelineTests.cs      # F3.1 config pipeline precedence & defaults tests
 ├─ ArchetypeCSharpCLI.sln
 ├─ global.json
 ├─ README.md
@@ -26,6 +31,11 @@ Follows Screaming Architecture and Separation of Concerns principles.
 Notes
 - CLI framework: System.CommandLine (beta4). Root command exposes --help (default) and --version/-v.
 - More features will be grouped by domain inside `src/` as they grow (e.g., commands, services, adapters).
+
+Configuration
+- Config sources: appsettings.json -> appsettings.{Environment}.json -> Environment Variables
+- Environment is taken from DOTNET_ENVIRONMENT or ASPNETCORE_ENVIRONMENT, default Production.
+- Env vars can use flat keys (HttpTimeoutSeconds) or nested via App__HttpTimeoutSeconds; nested overrides flat.
 
 ## Bill of materials
 

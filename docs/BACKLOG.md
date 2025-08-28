@@ -44,7 +44,7 @@ Define subcommands, options, and basic validation; map to handlers and stable ex
 
 - Cross-cutting behavior needed early for predictability and diagnostics.
 
-### F3.1 Configuration pipeline (appsettings + env) ✨ CODED
+### F3.1 Configuration pipeline (appsettings + env) ✅ TESTED
 
 - Dependencies:
   
@@ -57,6 +57,7 @@ Load appsettings.json, appsettings.{Environment}.json, and environment variables
   - [Feature Specification](./backlog/feat-config-pipeline.spec.md)
   - [Design Document](./backlog/feat-config-pipeline.design.md)
   - [Implementation Plan](./backlog/feat-config-pipeline.plan.md)
+  - Test status: ✅ Passed (xUnit) — precedence, defaults, and env overrides ([report](./backlog/feat-config-pipeline.test.md))
 
 ### F3.2 Structured console logging ⏳ PENDING
 

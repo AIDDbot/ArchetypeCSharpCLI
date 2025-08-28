@@ -7,39 +7,40 @@ namespace ArchetypeCSharpCLI.Configuration;
 /// </summary>
 public static class ConfigBuilder
 {
-  public static IConfigurationRoot BuildRaw()
-  {
-    var env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT")
-              ?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
-              ?? "Production";
-
-    var builder = new ConfigurationBuilder()
-      .SetBasePath(AppContext.BaseDirectory)
-      .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
-      .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: false)
-      .AddEnvironmentVariables();
-
-    return builder.Build();
-  }
-
-  public static AppConfig Build()
-  {
-    var raw = BuildRaw();
-    var cfg = new AppConfig();
-    // Bind to a temp object, then normalize
-    var temp = new AppConfig();
-    raw.Bind("App", temp); // allow nesting under "App" if desired
-    // Also allow flat keys
-    raw.Bind(temp);
-
-    var httpTimeout = temp.HttpTimeoutSeconds;
-    if (httpTimeout <= 0 || httpTimeout > 300) httpTimeout = 30;
-
-    return new AppConfig
+    public static IConfigurationRoot BuildRaw()
     {
-      Environment = string.IsNullOrWhiteSpace(temp.Environment) ? "Production" : temp.Environment,
-      HttpTimeoutSeconds = httpTimeout,
-      LogLevel = string.IsNullOrWhiteSpace(temp.LogLevel) ? "Information" : temp.LogLevel
-    };
-  }
+        var env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT")
+                  ?? Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
+                  ?? "Production";
+
+        var builder = new ConfigurationBuilder()
+          .SetBasePath(AppContext.BaseDirectory)
+          .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+          .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: false)
+          .AddEnvironmentVariables();
+
+        return builder.Build();
+    }
+
+    public static AppConfig Build()
+    {
+        var raw = BuildRaw();
+        var cfg = new AppConfig();
+        // Bind to a temp object, then normalize
+        var temp = new AppConfig();
+        // First bind flat keys, then allow overrides from nested "App" section
+        // to ensure environment variables like App__HttpTimeoutSeconds win
+        raw.Bind(temp);           // flat keys (e.g., HttpTimeoutSeconds)
+        raw.Bind("App", temp);   // nested section overrides (e.g., App:HttpTimeoutSeconds)
+
+        var httpTimeout = temp.HttpTimeoutSeconds;
+        if (httpTimeout <= 0 || httpTimeout > 300) httpTimeout = 30;
+
+        return new AppConfig
+        {
+            Environment = string.IsNullOrWhiteSpace(temp.Environment) ? "Production" : temp.Environment,
+            HttpTimeoutSeconds = httpTimeout,
+            LogLevel = string.IsNullOrWhiteSpace(temp.LogLevel) ? "Information" : temp.LogLevel
+        };
+    }
 }
