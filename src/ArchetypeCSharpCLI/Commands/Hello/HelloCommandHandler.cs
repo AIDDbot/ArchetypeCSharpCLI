@@ -10,17 +10,17 @@ namespace ArchetypeCSharpCLI.Commands.Hello;
 /// </summary>
 public static class HelloCommandHandler
 {
-    /// <summary>
-    /// Handles the 'hello' command using the provided options.
-    /// </summary>
-    /// <param name="opts">Parsed options for the command.</param>
-    /// <returns>Exit code (0 on success).</returns>
-    public static Task<int> HandleAsync(HelloOptions opts)
-    {
+  /// <summary>
+  /// Handles the 'hello' command using the provided options.
+  /// </summary>
+  /// <param name="opts">Parsed options for the command.</param>
+  /// <returns>Exit code (0 on success).</returns>
+  public static Task<int> HandleAsync(HelloOptions opts)
+  {
     var logger = Log.For(typeof(HelloCommandHandler));
     using var scope = logger.BeginScope("hello name={Name}", opts.Name);
     logger.LogDebug("Handling hello command");
-        Console.WriteLine($"Hello, {opts.Name}!");
-        return Task.FromResult(0);
-    }
+    Console.WriteLine($"Hello, {opts.Name}!");
+    return Task.FromResult(0);
+  }
 }

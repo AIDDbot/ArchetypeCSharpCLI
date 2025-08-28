@@ -9,43 +9,43 @@ namespace ArchetypeCSharpCLI.Logging;
 /// </summary>
 public static class Log
 {
-    private static ILoggerFactory? _factory;
-    private static readonly object _lock = new();
+  private static ILoggerFactory? _factory;
+  private static readonly object _lock = new();
 
-    private static ILoggerFactory Factory
+  private static ILoggerFactory Factory
+  {
+    get
     {
-        get
-        {
-            if (_factory is not null) return _factory;
-            lock (_lock)
-            {
-                _factory ??= CreateFactory();
-            }
-            return _factory;
-        }
+      if (_factory is not null) return _factory;
+      lock (_lock)
+      {
+        _factory ??= CreateFactory();
+      }
+      return _factory;
     }
+  }
 
-    private static ILoggerFactory CreateFactory()
+  private static ILoggerFactory CreateFactory()
+  {
+    var level = ParseLevel(AppSettings.Current.LogLevel);
+    return LoggerFactory.Create(builder =>
     {
-        var level = ParseLevel(AppSettings.Current.LogLevel);
-        return LoggerFactory.Create(builder =>
-        {
-            builder.SetMinimumLevel(level);
-            builder.AddSimpleConsole(options =>
-            {
-                options.SingleLine = true;
-                options.TimestampFormat = "HH:mm:ss ";
-                options.IncludeScopes = true;
-            });
+      builder.SetMinimumLevel(level);
+      builder.AddSimpleConsole(options =>
+          {
+          options.SingleLine = true;
+          options.TimestampFormat = "HH:mm:ss ";
+          options.IncludeScopes = true;
         });
-    }
+    });
+  }
 
-    private static LogLevel ParseLevel(string? value)
-    {
-        return Enum.TryParse<LogLevel>(value, true, out var lvl) ? lvl : LogLevel.Information;
-    }
+  private static LogLevel ParseLevel(string? value)
+  {
+    return Enum.TryParse<LogLevel>(value, true, out var lvl) ? lvl : LogLevel.Information;
+  }
 
-    public static ILogger<T> For<T>() => Factory.CreateLogger<T>();
-    public static ILogger For(Type type) => Factory.CreateLogger(type.FullName ?? type.Name);
-    public static ILogger For(string category) => Factory.CreateLogger(category);
+  public static ILogger<T> For<T>() => Factory.CreateLogger<T>();
+  public static ILogger For(Type type) => Factory.CreateLogger(type.FullName ?? type.Name);
+  public static ILogger For(string category) => Factory.CreateLogger(category);
 }
