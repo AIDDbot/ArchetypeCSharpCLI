@@ -33,10 +33,10 @@ public static class Log
       builder.SetMinimumLevel(level);
       builder.AddSimpleConsole(options =>
           {
-          options.SingleLine = true;
-          options.TimestampFormat = "HH:mm:ss ";
-          options.IncludeScopes = true;
-        });
+            options.SingleLine = true;
+            options.TimestampFormat = "HH:mm:ss ";
+            options.IncludeScopes = true;
+          });
     });
   }
 
