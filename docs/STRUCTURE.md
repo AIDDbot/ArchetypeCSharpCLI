@@ -7,10 +7,16 @@ Follows Screaming Architecture and Separation of Concerns principles.
 ├─ src/
 │  ├─ ArchetypeCSharpCLI/            # CLI application (presentation layer)
 │  │  ├─ ArchetypeCSharpCLI.csproj
-│  │  └─ Program.cs
+│  │  ├─ Program.cs
+│  │  └─ Commands/
+│  │     ├─ CommandFactory.cs       # Builds root parser and subcommands
+│  │     └─ Hello/
+│  │        ├─ HelloOptions.cs      # Input model for 'hello' command
+│  │        └─ HelloCommandHandler.cs # Handler for 'hello' behavior
 │  └─ ArchetypeCSharpCLI.Tests/      # Test project
 │     ├─ ArchetypeCSharpCLI.Tests.csproj
-│     └─ CliHostTests.cs
+│     ├─ CliHostTests.cs             # Host-level help/version tests
+│     └─ CommandRoutingTests.cs      # F1.2 routing & validation tests
 ├─ ArchetypeCSharpCLI.sln
 ├─ global.json
 ├─ README.md

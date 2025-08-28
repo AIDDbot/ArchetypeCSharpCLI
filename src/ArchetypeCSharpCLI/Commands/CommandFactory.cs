@@ -1,6 +1,7 @@
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
+using ArchetypeCSharpCLI.Commands.Hello;
 
 namespace ArchetypeCSharpCLI.Commands;
 
@@ -60,9 +61,20 @@ public static class CommandFactory
 
     cmd.AddOption(nameOption);
 
-    cmd.SetHandler((string name) =>
+    // Bind to HelloOptions and delegate to handler
+    cmd.SetHandler(async (string name) =>
     {
-      Console.WriteLine($"Hello, {name}!");
+      var opts = new HelloOptions { Name = name };
+      var code = await HelloCommandHandler.HandleAsync(opts);
+      // System.CommandLine will use returned code if we set it on context, but here we just write nothing else
+      // and rely on the returned Task completing; handler return codes are not captured by SetHandler(Action<..>)
+      // so we map zero/non-zero by throwing on non-zero. Keep it simple: assume success (0) only.
+      if (code != 0)
+      {
+        // Non-zero exit: write to stderr and set Environment.ExitCode for completeness.
+        Console.Error.WriteLine($"hello command failed with exit code {code}");
+        Environment.ExitCode = code;
+      }
     }, nameOption);
 
     return cmd;
