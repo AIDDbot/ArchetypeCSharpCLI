@@ -27,6 +27,8 @@ Write documentation for the feature: ${input:featureId}
 
 - [ ] Merge the branch named `feat/{featureId}` to `main` and switch to it.
 
+You are not allowed to push nothing to remote.
+
 ## Validation
 
 - [ ] [BACKLOG.md](/docs/BACKLOG.md) is updated with the feature test link and status
