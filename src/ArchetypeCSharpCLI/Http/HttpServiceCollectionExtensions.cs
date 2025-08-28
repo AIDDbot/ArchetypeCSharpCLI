@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
 using ArchetypeCSharpCLI.Configuration;
+using ArchetypeCSharpCLI.Mappers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Http;
@@ -33,6 +34,10 @@ public static class HttpServiceCollectionExtensions
 
     // Register HTTP error handler
     services.AddSingleton<IHttpErrorHandler, HttpErrorHandler>();
+
+    // Register mappers
+    services.AddSingleton<IIpApiMapper, IpApiMapper>();
+    services.AddSingleton<IOpenMeteoMapper, OpenMeteoMapper>();
 
     var timeoutSeconds = Clamp(settings.HttpTimeoutSeconds, 1, 60);
     var product = new ProductInfoHeaderValue("ArchetypeCSharpCLI", VersionInfo.GetInformationalVersion());

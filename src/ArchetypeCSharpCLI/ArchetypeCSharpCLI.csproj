@@ -29,6 +29,9 @@
   <Compile Include="Configuration\**\*.cs" />
   <Compile Include="Http\**\*.cs" />
   <Compile Include="Logging\**\*.cs" />
+  <Compile Include="Domain\**\*.cs" />
+  <Compile Include="Dtos\**\*.cs" />
+  <Compile Include="Mappers\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="appsettings.json">
