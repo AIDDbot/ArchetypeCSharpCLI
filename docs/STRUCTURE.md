@@ -63,8 +63,99 @@ Configuration
 	- xUnit: 2.9.2
 	- xunit.runner.visualstudio: 2.8.2
 	- Microsoft.NET.Test.Sdk: 17.11.1
-	- FluentAssertions: 6.12.1
+	# Project structure
 
-- Tooling
-	- .NET CLI (`dotnet build`, `dotnet test`, `dotnet run`)
-	- dotnet format (whitespace)
+	Follows Screaming Architecture and Separation of Concerns principles.
+
+	```text
+	/(repo root)
+	├─ src/
+	│  ├─ ArchetypeCSharpCLI/            # CLI application (presentation layer)
+	│  │  ├─ ArchetypeCSharpCLI.csproj
+	│  │  ├─ Program.cs
+	│  │  ├─ appsettings.json
+	│  │  ├─ Configuration/              # F3.1 configuration pipeline
+	│  │  │  ├─ AppConfig.cs            # Typed config POCO with defaults
+	│  │  │  ├─ AppSettings.cs          # Cached accessor to current AppConfig
+	│  │  │  ├─ ConfigBuilder.cs        # Builds IConfiguration/AppConfig from files+env
+	│  │  │  └─ Binding/                # F3.3 typed options binding layer
+	│  │  │     ├─ OptionsBootstrap.cs  # Minimal Options+Configuration container (Init)
+	│  │  │     ├─ OptionsExtensions.cs # AddBoundOptions<T> helper with validation
+	│  │  │     └─ OptionsAccess.cs      # Static IOptions<T>/IOptionsMonitor<T> access
+	│  │  ├─ Commands/
+	│  │  │  ├─ CommandFactory.cs       # Builds root parser and subcommands
+	│  │  │  ├─ Hello/
+	│  │  │  │  ├─ HelloOptions.cs      # Input model for 'hello' command
+	│  │  │  │  └─ HelloCommandHandler.cs # Handler for 'hello' behavior
+	│  │  │  └─ Weather/
+	│  │  │     ├─ WeatherCommand.cs
+	│  │  │     └─ WeatherHandler.cs
+	│  │  ├─ Http/                       # HTTP clients & helpers
+	│  │  │  ├─ VersionInfo.cs
+	│  │  │  ├─ HttpClientExtensions.cs
+	│  │  │  └─ GeoIp/
+	│  │  │     ├─ IGeoIpClient.cs
+	│  │  │     └─ GeoIpClient.cs
+	│  │  ├─ Logging/
+	│  │  │  └─ Log.cs
+	│  │  ├─ Domain/
+	│  │  │  ├─ WeatherReport.cs
+	│  │  │  └─ Location.cs
+	│  │  ├─ Dtos/
+	│  │  │  ├─ OpenMeteoResponse.cs
+	│  │  │  └─ GeoIp/
+	│  │  │     └─ IpApiResponseDto.cs
+	│  │  └─ Mappers/
+	│  │     ├─ IOpenMeteoMapper.cs
+	│  │     └─ IIpApiMapper.cs
+	│  └─ ArchetypeCSharpCLI.Tests/      # Test project
+	│     ├─ ArchetypeCSharpCLI.Tests.csproj
+	│     ├─ CliHostTests.cs             # Host-level help/version tests
+	│     ├─ CommandRoutingTests.cs      # routing & validation tests
+	│     ├─ ConfigPipelineTests.cs      # config pipeline precedence & defaults tests
+	│     ├─ ConfigBindingTests.cs       # binding, validation, env precedence, reload
+	│     ├─ HttpTypedClientTests.cs
+	│     ├─ HttpErrorHandlingTests.cs
+	│     ├─ DtoMappingTests.cs
+	│     ├─ LoggingConsoleTests.cs      # console logging levels, scopes, defaults
+	│     └─ TestUtils/                  # Shared test helpers
+	│        ├─ EnvVarScope.cs           # Scoped environment variable setter
+	│        └─ TempSettingsFiles.cs     # Scoped temporary appsettings files (with reload)
+	├─ ArchetypeCSharpCLI.sln
+	├─ global.json
+	├─ README.md
+	└─ LICENSE
+	```
+
+	Notes
+	- CLI framework: System.CommandLine (beta4). Root command exposes `--help` (default) and `--version`/`-v`.
+	- More features are grouped by domain inside `src/` (commands, http clients, mappers, dtos, logging, etc.).
+
+	Configuration
+	- Config sources: `appsettings.json` -> `appsettings.{Environment}.json` -> Environment Variables
+	- Environment is taken from `DOTNET_ENVIRONMENT` or `ASPNETCORE_ENVIRONMENT`, default `Production`.
+	- Env vars can use flat keys (`HttpTimeoutSeconds`) or nested via `App__HttpTimeoutSeconds`; nested overrides flat.
+	- Binding: use `OptionsBootstrap.Init(configuration, services => services.AddBoundOptions<T>(configuration, "Section"))`.
+		- DataAnnotations validation runs by default; custom predicate validation supported.
+		- Access via `OptionsAccess.Get<T>()` or `OptionsAccess.GetMonitor<T>()` for live reload.
+
+	## Bill of materials
+
+	- Runtime & SDK
+		- .NET SDK: 9.0.304 (pinned via `global.json`)
+		- Target Framework: `net9.0`
+
+	- Application Libraries
+		- System.CommandLine: `2.0.0-beta4.22272.1` (see `ArchetypeCSharpCLI.csproj`)
+		- Microsoft.Extensions.Configuration / Options / Logging packages: `9.0.0`
+		- C# Language: Nullable enabled, implicit usings enabled
+
+	- Testing Libraries (see `ArchetypeCSharpCLI.Tests.csproj`)
+		- xUnit: `2.9.2`
+		- xunit.runner.visualstudio: `2.8.2`
+		- Microsoft.NET.Test.Sdk: `17.11.1`
+		- FluentAssertions: `6.12.1`
+
+	- Tooling
+		- .NET CLI (`dotnet build`, `dotnet test`, `dotnet run`)
+		- dotnet format (whitespace)
