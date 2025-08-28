@@ -21,11 +21,27 @@ public class WeatherClient : IWeatherClient
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<WeatherResult> GetCurrentAsync(decimal latitude, decimal longitude, string units = "metric", CancellationToken ct = default)
+    public async Task<WeatherResult> GetCurrentAsync(decimal latitude, decimal longitude, string units = "metric", bool raw = false, CancellationToken ct = default)
     {
         try
         {
             var url = $"/v1/forecast?latitude={latitude}&longitude={longitude}&current_weather=true";
+            if (raw)
+            {
+                var text = await _http.GetStringAsync(url, ct).ConfigureAwait(false);
+                // Try to parse for mapping but return raw regardless
+                try
+                {
+                    var parsed = System.Text.Json.JsonSerializer.Deserialize<OpenMeteoResponse>(text);
+                    var report = _mapper.MapToWeatherReport(parsed!, units);
+                    return WeatherResult.Success(report, text);
+                }
+                catch (Exception ex)
+                {
+                    return WeatherResult.Failure($"Failed to parse provider response: {ex.Message}");
+                }
+            }
+
             var dto = await _http.GetFromJsonAsync<OpenMeteoResponse>(url, ct).ConfigureAwait(false);
             if (dto == null)
                 return WeatherResult.Failure("Provider did not return data.");

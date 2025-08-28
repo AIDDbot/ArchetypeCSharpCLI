@@ -9,7 +9,7 @@ namespace ArchetypeCSharpCLI.Commands.Weather;
 
 public static class WeatherHandler
 {
-    public static async Task<int> HandleAsync(decimal? lat, decimal? lon, int? timeoutSeconds, string units = "metric")
+    public static async Task<int> HandleAsync(decimal? lat, decimal? lon, int? timeoutSeconds, string units = "metric", bool raw = false)
     {
         // Resolve services from a simple service locator available in OptionsBootstrap
         var provider = OptionsBootstrap.Services ?? throw new InvalidOperationException("DI services not initialized");
@@ -52,11 +52,16 @@ public static class WeatherHandler
 
         using var cts = timeoutSeconds.HasValue ? new CancellationTokenSource(TimeSpan.FromSeconds(timeoutSeconds.Value)) : new CancellationTokenSource();
 
-    var weatherResult = await weather.GetCurrentAsync(latitude, longitude, units, cts.Token);
+        var weatherResult = await weather.GetCurrentAsync(latitude, longitude, units, raw, cts.Token);
         if (!weatherResult.IsSuccess)
         {
             Console.Error.WriteLine(weatherResult.ErrorMessage);
             return ExitCodes.NetworkOrProviderError;
+        }
+        if (raw && !string.IsNullOrEmpty(weatherResult.RawJson))
+        {
+            Console.WriteLine(weatherResult.RawJson);
+            return ExitCodes.Success;
         }
 
         var report = weatherResult.Report!;
