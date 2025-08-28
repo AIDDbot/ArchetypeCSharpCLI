@@ -24,7 +24,7 @@ Provide a console entry point with `--help` and `--version`, wiring a command fr
   - Test status: ✅ Passed (xUnit) — process-level checks for help/version
   - Structure: [STRUCTURE.md](../STRUCTURE.md)
 
-### F1.2 Command routing and option validation ✅ TESTED | ⛲ CLEANED
+### F1.2 Command routing and option validation ✔️ RELEASED
 
 - Dependencies:
   - F1.1 CLI host skeleton and help/version
@@ -37,7 +37,7 @@ Define subcommands, options, and basic validation; map to handlers and stable ex
   - [Feature Specification](./backlog/feat-command-routing.spec.md)
   - [Design Document](./backlog/feat-command-routing.design.md)
   - [Implementation Plan](./backlog/feat-command-routing.plan.md)
-  - Test status: ✅ Passed (xUnit) — routing, help, required and custom validation
+  - Test status: ✅ Passed (xUnit) — routing, help, required and custom validation ([report](./backlog/feat-command-routing.test.md))
   - Structure: [STRUCTURE.md](../STRUCTURE.md)
 
 ## E3 Configuration & Logging ❗ High
