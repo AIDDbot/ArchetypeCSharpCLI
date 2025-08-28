@@ -18,9 +18,9 @@ public static class HttpServiceCollectionExtensions
     var normalized = new AppConfig
     {
       Environment = string.IsNullOrWhiteSpace(temp.Environment) ? "Production" : temp.Environment,
-  // Preserve configured value (may be out of range); downstream clamp enforces [1,60].
-  // If not configured, AppConfig default (30) is used.
-  HttpTimeoutSeconds = temp.HttpTimeoutSeconds,
+      // Preserve configured value (may be out of range); downstream clamp enforces [1,60].
+      // If not configured, AppConfig default (30) is used.
+      HttpTimeoutSeconds = temp.HttpTimeoutSeconds,
       LogLevel = string.IsNullOrWhiteSpace(temp.LogLevel) ? "Information" : temp.LogLevel
     };
 

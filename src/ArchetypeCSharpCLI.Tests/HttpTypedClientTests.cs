@@ -50,9 +50,9 @@ public class HttpTypedClientTests
     // Default timeout should be 30s when not configured
     client.Timeout.Should().Be(TimeSpan.FromSeconds(30));
 
-  // User-Agent should include product token with version (informational version allowed)
-  var uaString = string.Join(" ", client.DefaultRequestHeaders.UserAgent.Select(p => p.ToString()));
-  uaString.Should().MatchRegex(@"\bArchetypeCSharpCLI/\S+");
+    // User-Agent should include product token with version (informational version allowed)
+    var uaString = string.Join(" ", client.DefaultRequestHeaders.UserAgent.Select(p => p.ToString()));
+    uaString.Should().MatchRegex(@"\bArchetypeCSharpCLI/\S+");
   }
 
   private interface IExampleApi
