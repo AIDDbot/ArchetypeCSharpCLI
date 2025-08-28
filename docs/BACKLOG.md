@@ -127,7 +127,7 @@ Handle timeouts, network errors, and non-2xx responses with clear messages and m
   - [Implementation Plan](./backlog/feat-http-error-handling.plan.md)
   - Test status: ✅ Added unit tests — error mapping and HttpClientExtensions behavior ([report](./backlog/feat-http-error-handling.test.md))
 
-### F4.3 DTOs and mapping for external APIs ✨ CODED
+### F4.3 DTOs and mapping for external APIs ✅ TESTED
 
 - Dependencies:
   - F4.1 Typed HttpClient with sensible timeouts
@@ -140,6 +140,7 @@ Define minimal DTOs for ip-api.com and open-meteo.com and map to internal models
   - [Feature Specification](./backlog/feat-dto-mapping.spec.md)
   - [Design Document](./backlog/feat-dto-mapping.design.md)
   - [Implementation Plan](./backlog/feat-dto-mapping.plan.md)
+  - Test status: ✅ Added unit tests — DTO→Domain mapping and validation ([report](./backlog/feat-dto-mapping.test.md))
 
 ## E2 Weather Experience ❗ High
 
