@@ -146,7 +146,7 @@ Define minimal DTOs for ip-api.com and open-meteo.com and map to internal models
 
 - Demonstrates a real-world command using external data.
 
-### F2.1 IP Geolocation client ✏️ DESIGNED
+### F2.1 IP Geolocation client 📝 PLANNED
 
 - Dependencies:
   - F4.1 Typed HttpClient with sensible timeouts
