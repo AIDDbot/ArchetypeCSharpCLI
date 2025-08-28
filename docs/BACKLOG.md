@@ -60,7 +60,7 @@ Load appsettings.json, appsettings.{Environment}.json, and environment variables
   - Test status: ✅ Passed (xUnit) — precedence, defaults, and env overrides ([report](./backlog/feat-config-pipeline.test.md))
   - Structure: [STRUCTURE.md](../STRUCTURE.md)
 
-### F3.2 Structured console logging ✨ CODED
+### F3.2 Structured console logging ✅ TESTED
 
 - Dependencies:
   
@@ -73,6 +73,7 @@ Add Microsoft.Extensions.Logging console provider with levels and scopes; ensure
   - [Feature Specification](./feats/feat-logging-console.spec.md)
   - [Design Document](./feats/feat-logging-console.design.md)
   - [Implementation Plan](./feats/feat-logging-console.plan.md)
+  - Test status: ✅ Passed (xUnit) — console output levels, scopes, and defaults
 
 ### F3.3 Bind typed options/POCOs ⏳ PENDING
 
