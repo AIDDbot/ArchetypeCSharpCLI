@@ -7,6 +7,7 @@ Archetype CSharp CLI is a starter template for building .NET command‑line appl
 
 - [docs/PRD.md](./docs/PRD.md)
 - [docs/DOMAIN.md](./docs/DOMAIN.md)
+- [docs/SYSTEMS.md](./docs/SYSTEMS.md)
 
 ---
 
