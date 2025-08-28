@@ -75,7 +75,7 @@ Add Microsoft.Extensions.Logging console provider with levels and scopes; ensure
   - [Implementation Plan](./feats/feat-logging-console.plan.md)
   - Test status: ✅ Passed (xUnit) — console output levels, scopes, and defaults
 
-### F3.3 Bind typed options/POCOs ⏳ PENDING
+### F3.3 Bind typed options/POCOs 📝 PLANNED
 
 - Dependencies:
   - F3.1 Configuration pipeline (appsettings + env)
