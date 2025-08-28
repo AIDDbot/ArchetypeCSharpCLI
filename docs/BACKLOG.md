@@ -44,7 +44,7 @@ Define subcommands, options, and basic validation; map to handlers and stable ex
 
 - Cross-cutting behavior needed early for predictability and diagnostics.
 
-### F3.1 Configuration pipeline (appsettings + env) 📝 PLANNED
+### F3.1 Configuration pipeline (appsettings + env) ✨ CODED
 
 - Dependencies:
   
