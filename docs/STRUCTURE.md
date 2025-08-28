@@ -11,7 +11,11 @@ Follows Screaming Architecture and Separation of Concerns principles.
 │  │  ├─ Configuration/              # F3.1 configuration pipeline
 │  │  │  ├─ AppConfig.cs            # Typed config POCO with defaults
 │  │  │  ├─ AppSettings.cs          # Cached accessor to current AppConfig
-│  │  │  └─ ConfigBuilder.cs        # Builds IConfiguration/AppConfig from files+env
+	│  │  │  └─ ConfigBuilder.cs        # Builds IConfiguration/AppConfig from files+env
+	│  │  ├─ Configuration/Binding/     # F3.3 typed options binding layer
+	│  │  │  ├─ OptionsBootstrap.cs     # Minimal Options+Configuration container (Init)
+	│  │  │  ├─ OptionsExtensions.cs    # AddBoundOptions<T> helper with validation
+	│  │  │  └─ OptionsAccess.cs        # Static IOptions<T>/IOptionsMonitor<T> access
 │  │  └─ Commands/
 │  │     ├─ CommandFactory.cs       # Builds root parser and subcommands
 │  │     └─ Hello/
@@ -22,6 +26,10 @@ Follows Screaming Architecture and Separation of Concerns principles.
 │     ├─ CliHostTests.cs             # Host-level help/version tests
 │     ├─ CommandRoutingTests.cs      # F1.2 routing & validation tests
 │     ├─ ConfigPipelineTests.cs      # F3.1 config pipeline precedence & defaults tests
+│     ├─ ConfigBindingTests.cs       # F3.3 binding, validation, env precedence, reload
+│     └─ TestUtils/                  # Shared test helpers
+│        ├─ EnvVarScope.cs           # Scoped environment variable setter
+│        └─ TempSettingsFiles.cs     # Scoped temporary appsettings files (with reload)
 │     └─ LoggingConsoleTests.cs      # F3.2 console logging levels, scopes, defaults
 ├─ ArchetypeCSharpCLI.sln
 ├─ global.json
@@ -37,6 +45,9 @@ Configuration
 - Config sources: appsettings.json -> appsettings.{Environment}.json -> Environment Variables
 - Environment is taken from DOTNET_ENVIRONMENT or ASPNETCORE_ENVIRONMENT, default Production.
 - Env vars can use flat keys (HttpTimeoutSeconds) or nested via App__HttpTimeoutSeconds; nested overrides flat.
+ - Binding: use `OptionsBootstrap.Init(configuration, services => services.AddBoundOptions<T>(configuration, "Section"))`.
+	 - DataAnnotations validation runs by default; custom predicate validation supported.
+	 - Access via `OptionsAccess.Get<T>()` or `OptionsAccess.GetMonitor<T>()` for live reload.
 
 ## Bill of materials
 

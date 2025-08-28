@@ -5,7 +5,7 @@ namespace ArchetypeCSharpCLI.Configuration.Binding;
 
 /// <summary>
 /// Minimal bootstrapper to host Options and Configuration without adopting full DI yet.
-/// Builds a <see cref="ServiceProvider"/> with Options services and stores it for access.
+/// Builds a <see cref="ServiceProvider"/> with Options services and stores it for access via <see cref="OptionsAccess"/>.
 /// </summary>
 public static class OptionsBootstrap
 {
@@ -13,8 +13,13 @@ public static class OptionsBootstrap
 
   /// <summary>
   /// Initializes the options container using the provided configuration.
-  /// You can extend registrations via the optional configure callback.
+  /// Registers <see cref="IConfiguration"/> and options services; callers can extend registrations
+  /// using the optional <paramref name="configure"/> callback (e.g., to bind specific option types).
   /// </summary>
+  /// <param name="configuration">The configuration root used by options bindings.</param>
+  /// <param name="configure">An optional callback to add services and bind options.</param>
+  /// <returns>The built <see cref="IServiceProvider"/> for advanced scenarios.</returns>
+  /// <exception cref="ArgumentNullException">Thrown when <paramref name="configuration"/> is null.</exception>
   public static IServiceProvider Init(IConfiguration configuration, Action<IServiceCollection>? configure = null)
   {
     ArgumentNullException.ThrowIfNull(configuration);

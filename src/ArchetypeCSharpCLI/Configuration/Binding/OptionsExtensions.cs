@@ -13,6 +13,16 @@ public static class OptionsExtensions
   /// Binds a configuration section to an options type, adds DataAnnotations validation,
   /// and allows optional post-configuration and custom validation predicate.
   /// </summary>
+  /// <typeparam name="T">The options POCO type to bind and validate.</typeparam>
+  /// <param name="services">The service collection to register options into.</param>
+  /// <param name="configuration">The configuration root that contains the section.</param>
+  /// <param name="sectionName">The configuration section name to bind (e.g., "App").</param>
+  /// <param name="postConfigure">Optional action to post-configure bound options.</param>
+  /// <param name="validate">Optional predicate for custom validation; return true when valid.</param>
+  /// <param name="validateError">Optional custom error message when <paramref name="validate"/> fails.</param>
+  /// <returns>The same <see cref="IServiceCollection"/> to allow fluent configuration.</returns>
+  /// <exception cref="ArgumentNullException">Thrown when <paramref name="services"/> or <paramref name="configuration"/> is null.</exception>
+  /// <exception cref="ArgumentException">Thrown when <paramref name="sectionName"/> is null or whitespace.</exception>
   public static IServiceCollection AddBoundOptions<T>(this IServiceCollection services, IConfiguration configuration, string sectionName,
       Action<T>? postConfigure = null, Func<T, bool>? validate = null, string? validateError = null)
       where T : class, new()

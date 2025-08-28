@@ -8,24 +8,24 @@ namespace ArchetypeCSharpCLI.Tests.TestUtils;
 /// </summary>
 public sealed class EnvVarScope : IDisposable
 {
-    private readonly (string key, string? prev)[] _pairs;
+  private readonly (string key, string? prev)[] _pairs;
 
-    public EnvVarScope(params (string key, string? value)[] vars)
+  public EnvVarScope(params (string key, string? value)[] vars)
+  {
+    _pairs = new (string, string?)[vars.Length];
+    for (int i = 0; i < vars.Length; i++)
     {
-        _pairs = new (string, string?)[vars.Length];
-        for (int i = 0; i < vars.Length; i++)
-        {
-            var (k, v) = vars[i];
-            _pairs[i] = (k, Environment.GetEnvironmentVariable(k));
-            Environment.SetEnvironmentVariable(k, v);
-        }
+      var (k, v) = vars[i];
+      _pairs[i] = (k, Environment.GetEnvironmentVariable(k));
+      Environment.SetEnvironmentVariable(k, v);
     }
+  }
 
-    public void Dispose()
+  public void Dispose()
+  {
+    foreach (var (k, prev) in _pairs)
     {
-        foreach (var (k, prev) in _pairs)
-        {
-            Environment.SetEnvironmentVariable(k, prev);
-        }
+      Environment.SetEnvironmentVariable(k, prev);
     }
+  }
 }
