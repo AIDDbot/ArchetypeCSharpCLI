@@ -241,7 +241,7 @@ Define exit code ranges for validation, network errors, and unexpected exception
   - [Design Document](./backlog/feat-exit-codes.design.md)
   - [Implementation Plan](./backlog/feat-exit-codes.plan.md)
 
-### F5.2 User-friendly error messages ⛪ SPECIFIED
+### F5.2 User-friendly error messages ✏️ DESIGNED
 
 - Dependencies:
   - F5.1 Exit code policy and mapping
