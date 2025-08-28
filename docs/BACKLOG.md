@@ -176,7 +176,7 @@ Call Open‑Meteo to retrieve the current weather based on coordinates.
   - [Design Document](./backlog/feat-weather-client.design.md)
   - [Implementation Plan](./backlog/feat-weather-client.plan.md)
 
-### F2.3 Weather command handler ⛔ BLOCKED
+### F2.3 Weather command handler 📝 PLANNED
 
 - Dependencies:
   - F1.2 Command routing and option validation
