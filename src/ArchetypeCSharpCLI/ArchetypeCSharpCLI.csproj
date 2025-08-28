@@ -15,5 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+  <Compile Include="Commands\**\*.cs" />
   </ItemGroup>
 </Project>

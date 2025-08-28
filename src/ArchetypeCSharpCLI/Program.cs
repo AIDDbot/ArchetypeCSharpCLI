@@ -2,6 +2,7 @@ using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 using System.Reflection;
+using ArchetypeCSharpCLI.Commands;
 
 namespace ArchetypeCSharpCLI;
 
@@ -42,34 +43,6 @@ public static class Program
   /// <returns>A configured <see cref="Parser"/> ready to invoke.</returns>
   private static Parser BuildParser()
   {
-    var root = new RootCommand("Archetype C# CLI — minimal host with help and version");
-
-    // Define version options (long and short)
-    var versionLong = new Option<bool>("--version", "Show version information and exit");
-    var versionShort = new Option<bool>("-v", "Show version information and exit");
-    root.AddOption(versionLong);
-    root.AddOption(versionShort);
-
-    var builder = new CommandLineBuilder(root)
-      .UseHelp()
-      .UseParseErrorReporting()
-      .CancelOnProcessTermination()
-      .AddMiddleware(async (context, next) =>
-      {
-        var argsContainHelp = context.ParseResult.Tokens.Any(t => t.Value is "--help" or "-h" or "-?");
-        var wantsVersion = context.ParseResult.GetValueForOption(versionLong) || context.ParseResult.GetValueForOption(versionShort);
-
-        if (wantsVersion && !argsContainHelp)
-        {
-          Console.WriteLine(GetInformationalVersion());
-          context.ExitCode = 0;
-          return;
-        }
-
-        // No subcommands yet: if nothing requested, let help middleware run
-        await next(context);
-      });
-
-    return builder.Build();
+    return CommandFactory.BuildParser(GetInformationalVersion);
   }
 }
