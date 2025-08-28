@@ -36,7 +36,7 @@ Include xUnit tests for core logic and an example GitHub Actions workflow for bu
 ## Technical Constraints
 
 - .NET 9 SDK; C# 11; cross‑platform (Windows/macOS/Linux where supported).
-- Use free, anonymous external APIs (ip-api.com and open-meteo.com); HTTPS only; no secrets.
+- Use free, anonymous external APIs (ip-api.com and open-meteo.com). Note: ip-api.com uses HTTP for the free tier; no secrets sent.
 - Keep template lightweight (no heavy scaffolding/generators by default).
 
 ### System C4 Context diagram
@@ -50,7 +50,7 @@ C4Context
   System_Ext(openMeteo, "Open‑Meteo API", "Weather data")
 
   Rel(dev, cli, "Invokes commands")
-  Rel(cli, ipApi, "Get location by IP", "HTTPS")
+  Rel(cli, ipApi, "Get location by IP", "HTTP")
   Rel(cli, openMeteo, "Get weather by lat/long", "HTTPS")
 ```
 

@@ -59,7 +59,7 @@ public static class HttpServiceCollectionExtensions
     // Base address uses ip-api.com which exposes /json endpoint for caller IP
     services.AddHttpClient<ArchetypeCSharpCLI.Http.GeoIp.IGeoIpClient, ArchetypeCSharpCLI.Http.GeoIp.GeoIpClient>(client =>
       {
-        client.BaseAddress = new Uri("https://ip-api.com");
+        client.BaseAddress = new Uri("http://ip-api.com");
       })
     .AddHttpMessageHandler(() => new HttpLoggingHandler());
 
