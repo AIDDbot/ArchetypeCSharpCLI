@@ -195,7 +195,7 @@ Implement the `weather` command to compose geolocation + weather, handle `--time
   - [Design Document](./backlog/feat-weather-command.design.md)
   - [Implementation Plan](./backlog/feat-weather-command.plan.md)
 
-### F2.4 Output formatting and units option ⛔ BLOCKED
+### F2.4 Output formatting and units option 📝 PLANNED
 
 - Dependencies:
   - F2.3 Weather command handler
