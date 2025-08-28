@@ -9,29 +9,29 @@ namespace ArchetypeCSharpCLI.Configuration.Binding;
 /// </summary>
 public static class OptionsBootstrap
 {
-    private static IServiceProvider? _serviceProvider;
+  private static IServiceProvider? _serviceProvider;
 
-    /// <summary>
-    /// Initializes the options container using the provided configuration.
-    /// You can extend registrations via the optional configure callback.
-    /// </summary>
-    public static IServiceProvider Init(IConfiguration configuration, Action<IServiceCollection>? configure = null)
-    {
-        ArgumentNullException.ThrowIfNull(configuration);
+  /// <summary>
+  /// Initializes the options container using the provided configuration.
+  /// You can extend registrations via the optional configure callback.
+  /// </summary>
+  public static IServiceProvider Init(IConfiguration configuration, Action<IServiceCollection>? configure = null)
+  {
+    ArgumentNullException.ThrowIfNull(configuration);
 
-        var services = new ServiceCollection();
-        services.AddSingleton(configuration);
-        services.AddOptions();
+    var services = new ServiceCollection();
+    services.AddSingleton(configuration);
+    services.AddOptions();
 
-        configure?.Invoke(services);
+    configure?.Invoke(services);
 
-        _serviceProvider = services.BuildServiceProvider();
-        OptionsBootstrapAccessor.ServiceProvider = _serviceProvider;
-        return _serviceProvider;
-    }
+    _serviceProvider = services.BuildServiceProvider();
+    OptionsBootstrapAccessor.ServiceProvider = _serviceProvider;
+    return _serviceProvider;
+  }
 
-    internal static class OptionsBootstrapAccessor
-    {
-        internal static IServiceProvider? ServiceProvider { get; set; }
-    }
+  internal static class OptionsBootstrapAccessor
+  {
+    internal static IServiceProvider? ServiceProvider { get; set; }
+  }
 }
