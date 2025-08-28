@@ -110,7 +110,7 @@ Provide typed HttpClient registration, default timeout, and base handlers.
   - [Design Document](./backlog/feat-http-typed-client.design.md)
   - [Implementation Plan](./backlog/feat-http-typed-client.plan.md)
 
-### F4.2 Error handling and non-2xx mapping ⛔ BLOCKED
+### F4.2 Error handling and non-2xx mapping ⏳ PENDING
 
 - Dependencies:
   - F4.1 Typed HttpClient with sensible timeouts
@@ -125,7 +125,7 @@ Handle timeouts, network errors, and non-2xx responses with clear messages and m
   - [Design Document](./backlog/feat-http-error-handling.design.md)
   - [Implementation Plan](./backlog/feat-http-error-handling.plan.md)
 
-### F4.3 DTOs and mapping for external APIs ⛔ BLOCKED
+### F4.3 DTOs and mapping for external APIs ⏳ PENDING
 
 - Dependencies:
   - F4.1 Typed HttpClient with sensible timeouts
