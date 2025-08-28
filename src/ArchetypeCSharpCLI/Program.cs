@@ -3,6 +3,7 @@ using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 using System.Reflection;
 using ArchetypeCSharpCLI.Commands;
+using ArchetypeCSharpCLI.Configuration;
 
 namespace ArchetypeCSharpCLI;
 
@@ -16,6 +17,8 @@ public static class Program
   /// <returns>Process exit code (0 for success; non-zero on failures).</returns>
   public static int Main(string[] args)
   {
+  // Initialize configuration early; safe no-op if files missing
+  _ = AppSettings.Current;
     var parser = BuildParser();
     // Show help by default when no args are provided
     var argList = args is { Length: > 0 } ? args : new[] { "--help" };

@@ -44,7 +44,7 @@ Define subcommands, options, and basic validation; map to handlers and stable ex
 
 - Cross-cutting behavior needed early for predictability and diagnostics.
 
-### F3.1 Configuration pipeline (appsettings + env) ⏳ PENDING
+### F3.1 Configuration pipeline (appsettings + env) 📝 PLANNED
 
 - Dependencies:
   
@@ -54,9 +54,9 @@ Define subcommands, options, and basic validation; map to handlers and stable ex
 Load appsettings.json, appsettings.{Environment}.json, and environment variables; expose typed access.
 
 - Links:
-  - [Feature Specification](./feats/feat-config-pipeline.spec.md)
-  - [Design Document](./feats/feat-config-pipeline.design.md)
-  - [Implementation Plan](./feats/feat-config-pipeline.plan.md)
+  - [Feature Specification](./backlog/feat-config-pipeline.spec.md)
+  - [Design Document](./backlog/feat-config-pipeline.design.md)
+  - [Implementation Plan](./backlog/feat-config-pipeline.plan.md)
 
 ### F3.2 Structured console logging ⏳ PENDING
 
@@ -72,7 +72,7 @@ Add Microsoft.Extensions.Logging console provider with levels and scopes; ensure
   - [Design Document](./feats/feat-logging-console.design.md)
   - [Implementation Plan](./feats/feat-logging-console.plan.md)
 
-### F3.3 Bind typed options/POCOs ⛔ BLOCKED
+### F3.3 Bind typed options/POCOs ⏳ PENDING
 
 - Dependencies:
   - F3.1 Configuration pipeline (appsettings + env)
