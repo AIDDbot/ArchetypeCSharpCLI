@@ -31,6 +31,9 @@ public static class HttpServiceCollectionExtensions
   {
     services.AddHttpClient();
 
+    // Register HTTP error handler
+    services.AddSingleton<IHttpErrorHandler, HttpErrorHandler>();
+
     var timeoutSeconds = Clamp(settings.HttpTimeoutSeconds, 1, 60);
     var product = new ProductInfoHeaderValue("ArchetypeCSharpCLI", VersionInfo.GetInformationalVersion());
 

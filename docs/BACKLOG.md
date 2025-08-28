@@ -111,7 +111,7 @@ Provide typed HttpClient registration, default timeout, and base handlers.
   - [Implementation Plan](./backlog/feat-http-typed-client.plan.md)
   - Test status: ✅ Passed (xUnit) — defaults, clamping, typed client inheritance, UA header ([report](./backlog/feat-http-typed-client.test.md))
 
-### F4.2 Error handling and non-2xx mapping 📝 PLANNED
+### F4.2 Error handling and non-2xx mapping ✨ CODED
 
 - Dependencies:
   - F4.1 Typed HttpClient with sensible timeouts
