@@ -31,26 +31,23 @@ public class OpenMeteoMapper : IOpenMeteoMapper
     if (response == null)
       throw new ArgumentNullException(nameof(response));
 
-    if (response.Current == null)
+    if (response.CurrentWeather == null)
       throw new InvalidOperationException("Current weather data is required but was not provided by Open-Meteo.");
 
-    if (!response.Current.Temperature2m.HasValue)
+    var temp = response.CurrentWeather.Temperature;
+    var code = response.CurrentWeather.Weathercode;
+    var time = response.CurrentWeather.Time;
+
+    if (double.IsNaN(temp))
       throw new InvalidOperationException("Temperature is required but was not provided by Open-Meteo.");
-
-    if (!response.Current.WeatherCode.HasValue)
-      throw new InvalidOperationException("Weather code is required but was not provided by Open-Meteo.");
-
-    if (string.IsNullOrEmpty(response.Current.Time))
+    if (string.IsNullOrEmpty(time))
       throw new InvalidOperationException("Observation time is required but was not provided by Open-Meteo.");
 
-    // Parse observation time
-    if (!DateTime.TryParse(response.Current.Time, out var observedAt))
-      throw new InvalidOperationException($"Invalid observation time format: {response.Current.Time}");
+    if (!DateTime.TryParse(time, out var observedAt))
+      throw new InvalidOperationException($"Invalid observation time format: {time}");
 
-    // Convert temperature if imperial units requested
-    var temperature = response.Current.Temperature2m.Value;
+    var temperature = (decimal)temp;
     var actualUnits = units;
-
     if (units.Equals("imperial", StringComparison.OrdinalIgnoreCase))
     {
       temperature = CelsiusToFahrenheit(temperature);
@@ -60,8 +57,7 @@ public class OpenMeteoMapper : IOpenMeteoMapper
       actualUnits = "metric";
     }
 
-    // Get weather description
-    var condition = WeatherCodeMapper.GetWeatherDescription(response.Current.WeatherCode.Value);
+    var condition = WeatherCodeMapper.GetWeatherDescription(code);
 
     return new WeatherReport(
         temperature: Math.Round(temperature, 1),

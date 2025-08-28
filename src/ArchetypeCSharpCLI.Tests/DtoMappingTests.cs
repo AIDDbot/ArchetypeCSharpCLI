@@ -30,6 +30,7 @@ public class DtoMappingTests
     act.Should().Throw<InvalidOperationException>();
   }
 
+
   [Theory]
   [InlineData("metric", 20.0, 20.0)]
   [InlineData("imperial", 25.0, 77.0)]
@@ -38,7 +39,7 @@ public class DtoMappingTests
     var mapper = new OpenMeteoMapper();
     var dto = new OpenMeteoResponse
     {
-      Current = new CurrentWeather { Temperature2m = (decimal)celsius, WeatherCode = 0, Time = "2025-08-28T10:00:00Z" }
+      CurrentWeather = new CurrentWeather { Temperature = celsius, Weathercode = 0, Time = "2025-08-28T10:00:00Z" }
     };
     var report = mapper.MapToWeatherReport(dto, units);
     ((double)report.Temperature).Should().BeApproximately(expected, 0.05);
@@ -50,7 +51,7 @@ public class DtoMappingTests
   public void OpenMeteoMapper_MissingFields_Throws()
   {
     var mapper = new OpenMeteoMapper();
-    var dto = new OpenMeteoResponse { Current = new CurrentWeather() };
+    var dto = new OpenMeteoResponse { CurrentWeather = new CurrentWeather() };
     Action act = () => mapper.MapToWeatherReport(dto, "metric");
     act.Should().Throw<InvalidOperationException>();
   }
