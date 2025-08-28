@@ -62,6 +62,12 @@ public static class HttpServiceCollectionExtensions
       client.BaseAddress = new Uri("https://ip-api.com");
     });
 
+    // Register Open-Meteo typed client
+    services.AddHttpClient<ArchetypeCSharpCLI.Http.Weather.IWeatherClient, ArchetypeCSharpCLI.Http.Weather.WeatherClient>(client =>
+    {
+      client.BaseAddress = new Uri("https://api.open-meteo.com");
+    });
+
     return services;
   }
 
