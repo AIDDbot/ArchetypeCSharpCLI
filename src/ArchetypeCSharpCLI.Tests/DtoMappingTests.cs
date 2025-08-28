@@ -41,7 +41,7 @@ public class DtoMappingTests
       Current = new CurrentWeather { Temperature2m = (decimal)celsius, WeatherCode = 0, Time = "2025-08-28T10:00:00Z" }
     };
     var report = mapper.MapToWeatherReport(dto, units);
-  ((double)report.Temperature).Should().BeApproximately(expected, 0.05);
+    ((double)report.Temperature).Should().BeApproximately(expected, 0.05);
     report.Source.Should().Be("open-meteo");
     report.Condition.Should().NotBeNullOrWhiteSpace();
   }

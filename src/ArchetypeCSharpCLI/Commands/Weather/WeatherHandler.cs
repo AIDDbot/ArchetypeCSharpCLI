@@ -13,7 +13,7 @@ public static class WeatherHandler
   public static async Task<int> HandleAsync(decimal? lat, decimal? lon, int? timeoutSeconds, string units = "metric", bool raw = false)
   {
     // Resolve services from a simple service locator available in OptionsBootstrap
-  var provider = OptionsBootstrap.Services ?? throw new InvalidOperationException("DI services not initialized");
+    var provider = OptionsBootstrap.Services ?? throw new InvalidOperationException("DI services not initialized");
 
     var geo = provider.GetService(typeof(IGeoIpClient)) as IGeoIpClient;
     var weather = provider.GetService(typeof(IWeatherClient)) as IWeatherClient;
@@ -43,7 +43,7 @@ public static class WeatherHandler
       if (!geoResult.IsSuccess)
       {
         Console.Error.WriteLine(geoResult.ErrorMessage);
-  return ExitCodes.NetworkOrTimeout;
+        return ExitCodes.NetworkOrTimeout;
       }
 
       var loc = geoResult.Location!;
@@ -57,7 +57,7 @@ public static class WeatherHandler
     if (!weatherResult.IsSuccess)
     {
       Console.Error.WriteLine(weatherResult.ErrorMessage);
-  return ExitCodes.NetworkOrTimeout;
+      return ExitCodes.NetworkOrTimeout;
     }
     if (raw && !string.IsNullOrEmpty(weatherResult.RawJson))
     {
