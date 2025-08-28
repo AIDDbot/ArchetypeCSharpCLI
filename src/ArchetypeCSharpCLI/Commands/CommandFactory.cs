@@ -29,6 +29,12 @@ public static class CommandFactory
         .AddMiddleware(async (context, next) =>
         {
           using var scope = Log.For("CLI").BeginScope("cmd={Command} args={Args}", context.ParseResult.CommandResult.Command.Name, string.Join(' ', context.ParseResult.Tokens.Select(t => t.Value)));
+          // Map parse/validation errors to a stable exit code before executing handlers
+          if (context.ParseResult.Errors.Count > 0)
+          {
+            context.ExitCode = global::ArchetypeCSharpCLI.ExitCodes.ValidationOrClientError;
+            return;
+          }
           var argsContainHelp = context.ParseResult.Tokens.Any(t => t.Value is "--help" or "-h" or "-?");
           var wantsVersion = context.ParseResult.GetValueForOption(versionLong) || context.ParseResult.GetValueForOption(versionShort);
 
@@ -38,8 +44,14 @@ public static class CommandFactory
             context.ExitCode = 0;
             return;
           }
-
-          await next(context);
+          try
+          {
+            await next(context);
+          }
+          catch (Exception)
+          {
+            context.ExitCode = global::ArchetypeCSharpCLI.ExitCodes.Unexpected;
+          }
         });
 
     return builder.Build();

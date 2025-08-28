@@ -1,5 +1,6 @@
 using System.Net;
 using Microsoft.Extensions.Logging;
+using ArchetypeCSharpCLI; // ExitCodes
 
 namespace ArchetypeCSharpCLI.Http;
 
@@ -39,31 +40,31 @@ public class HttpErrorHandler : IHttpErrorHandler
 
     return exception switch
     {
-      TaskCanceledException or OperationCanceledException => new HttpError(
+    TaskCanceledException or OperationCanceledException => new HttpError(
           HttpErrorType.Timeout,
           "Request timed out. The server took too long to respond. Try increasing the timeout with --timeout or check your network connection.",
-          1,
+          global::ArchetypeCSharpCLI.ExitCodes.NetworkOrTimeout,
           exception,
           correlationId),
 
-      HttpRequestException httpEx when httpEx.InnerException is System.Net.Sockets.SocketException => new HttpError(
+    HttpRequestException httpEx when httpEx.InnerException is System.Net.Sockets.SocketException => new HttpError(
           HttpErrorType.Network,
           "Network connection failed. Please check your internet connection and try again.",
-          1,
+          global::ArchetypeCSharpCLI.ExitCodes.NetworkOrTimeout,
           exception,
           correlationId),
 
-      HttpRequestException => new HttpError(
+    HttpRequestException => new HttpError(
           HttpErrorType.Network,
           "HTTP request failed. Please check your network connection and the target URL.",
-          1,
+          global::ArchetypeCSharpCLI.ExitCodes.NetworkOrTimeout,
           exception,
           correlationId),
 
-      _ => new HttpError(
+    _ => new HttpError(
           HttpErrorType.Unexpected,
           "An unexpected error occurred while making the HTTP request.",
-          4,
+          global::ArchetypeCSharpCLI.ExitCodes.Unexpected,
           exception,
           correlationId)
     };
@@ -78,14 +79,14 @@ public class HttpErrorHandler : IHttpErrorHandler
 
     var (errorType, exitCode) = response.StatusCode switch
     {
-      HttpStatusCode.Unauthorized => (HttpErrorType.ClientError, 2),
-      HttpStatusCode.Forbidden => (HttpErrorType.ClientError, 2),
-      HttpStatusCode.NotFound => (HttpErrorType.ClientError, 2),
-      HttpStatusCode.BadRequest => (HttpErrorType.ClientError, 2),
-      HttpStatusCode.TooManyRequests => (HttpErrorType.ClientError, 2),
-      _ when (int)response.StatusCode >= 400 && (int)response.StatusCode < 500 => (HttpErrorType.ClientError, 2),
-      _ when (int)response.StatusCode >= 500 => (HttpErrorType.ServerError, 3),
-      _ => (HttpErrorType.Unexpected, 4)
+  HttpStatusCode.Unauthorized => (HttpErrorType.ClientError, global::ArchetypeCSharpCLI.ExitCodes.ValidationOrClientError),
+  HttpStatusCode.Forbidden => (HttpErrorType.ClientError, global::ArchetypeCSharpCLI.ExitCodes.ValidationOrClientError),
+  HttpStatusCode.NotFound => (HttpErrorType.ClientError, global::ArchetypeCSharpCLI.ExitCodes.ValidationOrClientError),
+  HttpStatusCode.BadRequest => (HttpErrorType.ClientError, global::ArchetypeCSharpCLI.ExitCodes.ValidationOrClientError),
+  HttpStatusCode.TooManyRequests => (HttpErrorType.ClientError, global::ArchetypeCSharpCLI.ExitCodes.ValidationOrClientError),
+  _ when (int)response.StatusCode >= 400 && (int)response.StatusCode < 500 => (HttpErrorType.ClientError, global::ArchetypeCSharpCLI.ExitCodes.ValidationOrClientError),
+  _ when (int)response.StatusCode >= 500 => (HttpErrorType.ServerError, global::ArchetypeCSharpCLI.ExitCodes.ServerError),
+  _ => (HttpErrorType.Unexpected, global::ArchetypeCSharpCLI.ExitCodes.Unexpected)
     };
 
     var message = errorType switch

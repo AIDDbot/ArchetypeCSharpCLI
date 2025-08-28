@@ -13,22 +13,22 @@ Add a centralized ExitCodes contract, wire CommandFactory middleware to set exit
 
 ## Tasks
 
-- [ ] 1. Create central ExitCodes contract
+- [x] 1. Create central ExitCodes contract
   - Add `src/ArchetypeCSharpCLI/ExitCodes.cs` with documented constants (0..4)
   - Ensure namespace `ArchetypeCSharpCLI`
 
-- [ ] 2. Wire CLI host middleware for parse/unhandled mapping
+- [x] 2. Wire CLI host middleware for parse/unhandled mapping
   - Update `Commands/CommandFactory.cs` to check `context.ParseResult.Errors`
   - If any, set `context.ExitCode = ExitCodes.ValidationOrClientError` and return
   - Wrap `await next(context)` with try/catch and set `ExitCodes.Unexpected` on unhandled
 
-- [ ] 3. Align HttpErrorHandler with ExitCodes
+- [x] 3. Align HttpErrorHandler with ExitCodes
   - Update `Http/IHttpErrorHandler.cs` implementation to use ExitCodes constants
   - Keep messages concise and actionable
 
-- [ ] 4. Keep existing behavior of HttpClientExtensions
+- [x] 4. Keep existing behavior of HttpClientExtensions
   - No changes required; it throws with messages produced by handler
 
-- [ ] 5. Update BACKLOG status to ✨ CODED after implementation
+- [x] 5. Update BACKLOG status to ✨ CODED after implementation
 
 > End of Feature Implementation Tasks for feat-exit-codes, last updated 2025-08-28.
