@@ -95,7 +95,7 @@ Provide typed configuration binding for command options and services defaults.
 
 - Foundations for safe external API calls used by commands.
 
-### F4.1 Typed HttpClient with sensible timeouts 📝 PLANNED
+### F4.1 Typed HttpClient with sensible timeouts ✔️ RELEASED
 
 - Dependencies:
   
@@ -109,8 +109,9 @@ Provide typed HttpClient registration, default timeout, and base handlers.
   - [Feature Specification](./backlog/feat-http-typed-client.spec.md)
   - [Design Document](./backlog/feat-http-typed-client.design.md)
   - [Implementation Plan](./backlog/feat-http-typed-client.plan.md)
+  - Test status: ✅ Passed (xUnit) — defaults, clamping, typed client inheritance, UA header ([report](./backlog/feat-http-typed-client.test.md))
 
-### F4.2 Error handling and non-2xx mapping ⛔ BLOCKED
+### F4.2 Error handling and non-2xx mapping ⏳ PENDING
 
 - Dependencies:
   - F4.1 Typed HttpClient with sensible timeouts
@@ -125,7 +126,7 @@ Handle timeouts, network errors, and non-2xx responses with clear messages and m
   - [Design Document](./backlog/feat-http-error-handling.design.md)
   - [Implementation Plan](./backlog/feat-http-error-handling.plan.md)
 
-### F4.3 DTOs and mapping for external APIs ⛔ BLOCKED
+### F4.3 DTOs and mapping for external APIs ⏳ PENDING
 
 - Dependencies:
   - F4.1 Typed HttpClient with sensible timeouts
