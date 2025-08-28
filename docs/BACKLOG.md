@@ -95,7 +95,7 @@ Provide typed configuration binding for command options and services defaults.
 
 - Foundations for safe external API calls used by commands.
 
-### F4.1 Typed HttpClient with sensible timeouts ✅ TESTED
+### F4.1 Typed HttpClient with sensible timeouts ✔️ RELEASED
 
 - Dependencies:
   
