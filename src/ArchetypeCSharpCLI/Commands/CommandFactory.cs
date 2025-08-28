@@ -32,10 +32,10 @@ public static class CommandFactory
           // Map parse/validation errors to a stable exit code before executing handlers
           if (context.ParseResult.Errors.Count > 0)
           {
-      // Print first parse error in a concise, user-friendly way
-      var firstError = context.ParseResult.Errors[0];
-      global::ArchetypeCSharpCLI.ErrorOutput.Write(firstError.Message);
-      context.ExitCode = global::ArchetypeCSharpCLI.ExitCodes.ValidationOrClientError;
+            // Print first parse error in a concise, user-friendly way
+            var firstError = context.ParseResult.Errors[0];
+            global::ArchetypeCSharpCLI.ErrorOutput.Write(firstError.Message);
+            context.ExitCode = global::ArchetypeCSharpCLI.ExitCodes.ValidationOrClientError;
             return;
           }
           var argsContainHelp = context.ParseResult.Tokens.Any(t => t.Value is "--help" or "-h" or "-?");
