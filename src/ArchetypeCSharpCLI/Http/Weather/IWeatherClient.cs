@@ -6,7 +6,7 @@ namespace ArchetypeCSharpCLI.Http.Weather;
 
 public interface IWeatherClient
 {
-    Task<WeatherResult> GetCurrentAsync(decimal latitude, decimal longitude, CancellationToken ct = default);
+    Task<WeatherResult> GetCurrentAsync(decimal latitude, decimal longitude, string units = "metric", CancellationToken ct = default);
 }
 
 public sealed class WeatherResult

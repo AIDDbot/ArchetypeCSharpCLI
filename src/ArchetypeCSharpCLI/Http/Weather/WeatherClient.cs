@@ -21,7 +21,7 @@ public class WeatherClient : IWeatherClient
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<WeatherResult> GetCurrentAsync(decimal latitude, decimal longitude, CancellationToken ct = default)
+    public async Task<WeatherResult> GetCurrentAsync(decimal latitude, decimal longitude, string units = "metric", CancellationToken ct = default)
     {
         try
         {
@@ -32,7 +32,7 @@ public class WeatherClient : IWeatherClient
 
             try
             {
-                var report = _mapper.MapToWeatherReport(dto, "metric");
+                var report = _mapper.MapToWeatherReport(dto, units);
                 return WeatherResult.Success(report);
             }
             catch (Exception ex)
