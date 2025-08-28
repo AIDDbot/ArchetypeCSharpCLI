@@ -21,7 +21,8 @@ Follows Screaming Architecture and Separation of Concerns principles.
 │     ├─ ArchetypeCSharpCLI.Tests.csproj
 │     ├─ CliHostTests.cs             # Host-level help/version tests
 │     ├─ CommandRoutingTests.cs      # F1.2 routing & validation tests
-│     └─ ConfigPipelineTests.cs      # F3.1 config pipeline precedence & defaults tests
+│     ├─ ConfigPipelineTests.cs      # F3.1 config pipeline precedence & defaults tests
+│     └─ LoggingConsoleTests.cs      # F3.2 console logging levels, scopes, defaults
 ├─ ArchetypeCSharpCLI.sln
 ├─ global.json
 ├─ README.md
