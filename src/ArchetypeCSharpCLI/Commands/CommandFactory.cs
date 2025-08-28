@@ -21,6 +21,7 @@ public static class CommandFactory
 
     // subcommands
     root.AddCommand(BuildHelloCommand());
+  root.AddCommand(ArchetypeCSharpCLI.Commands.Weather.WeatherCommand.Build());
 
     var builder = new CommandLineBuilder(root)
         .UseHelp()
