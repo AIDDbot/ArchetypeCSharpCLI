@@ -10,40 +10,40 @@ namespace ArchetypeCSharpCLI.Http.GeoIp;
 
 public class GeoIpClient : IGeoIpClient
 {
-    private readonly HttpClient _http;
+  private readonly HttpClient _http;
 
-    public GeoIpClient(HttpClient http)
+  public GeoIpClient(HttpClient http)
+  {
+    _http = http ?? throw new ArgumentNullException(nameof(http));
+  }
+
+  public async Task<GeoIpResult> GetLocationAsync(CancellationToken ct = default)
+  {
+    try
     {
-        _http = http ?? throw new ArgumentNullException(nameof(http));
-    }
+      var dto = await _http.GetFromJsonAsync<IpApiResponseDto>("/json", ct).ConfigureAwait(false);
+      if (dto == null)
+        return GeoIpResult.Failure("Empty response from geoip provider.");
 
-    public async Task<GeoIpResult> GetLocationAsync(CancellationToken ct = default)
+      if (!string.Equals(dto.Status, "success", StringComparison.OrdinalIgnoreCase))
+      {
+        var msg = dto.Message ?? "Geoip provider returned failure.";
+        return GeoIpResult.Failure(msg);
+      }
+
+      if (!dto.Lat.HasValue || !dto.Lon.HasValue)
+        return GeoIpResult.Failure("Geoip provider did not return coordinates.");
+
+      var loc = new Location(dto.Lat.Value, dto.Lon.Value, dto.City, dto.Country);
+      return GeoIpResult.Success(loc);
+    }
+    catch (OperationCanceledException)
     {
-        try
-        {
-            var dto = await _http.GetFromJsonAsync<IpApiResponseDto>("/json", ct).ConfigureAwait(false);
-            if (dto == null)
-                return GeoIpResult.Failure("Empty response from geoip provider.");
-
-            if (!string.Equals(dto.Status, "success", StringComparison.OrdinalIgnoreCase))
-            {
-                var msg = dto.Message ?? "Geoip provider returned failure.";
-                return GeoIpResult.Failure(msg);
-            }
-
-            if (!dto.Lat.HasValue || !dto.Lon.HasValue)
-                return GeoIpResult.Failure("Geoip provider did not return coordinates.");
-
-            var loc = new Location(dto.Lat.Value, dto.Lon.Value, dto.City, dto.Country);
-            return GeoIpResult.Success(loc);
-        }
-        catch (OperationCanceledException)
-        {
-            return GeoIpResult.Failure("Operation cancelled or timed out.");
-        }
-        catch (Exception ex)
-        {
-            return GeoIpResult.Failure($"Network or provider error: {ex.Message}");
-        }
+      return GeoIpResult.Failure("Operation cancelled or timed out.");
     }
+    catch (Exception ex)
+    {
+      return GeoIpResult.Failure($"Network or provider error: {ex.Message}");
+    }
+  }
 }
