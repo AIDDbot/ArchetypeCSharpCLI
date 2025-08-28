@@ -209,7 +209,7 @@ Provide human-friendly output and `--units` (metric|imperial) conversion.
   - [Design Document](./backlog/feat-weather-output.design.md)
   - [Implementation Plan](./backlog/feat-weather-output.plan.md)
 
-### F2.5 Raw JSON output option ⛔ BLOCKED
+### F2.5 Raw JSON output option 📝 PLANNED
 
 - Dependencies:
   - F2.3 Weather command handler
