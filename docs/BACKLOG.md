@@ -146,7 +146,7 @@ Define minimal DTOs for ip-api.com and open-meteo.com and map to internal models
 
 - Demonstrates a real-world command using external data.
 
-### F2.1 IP Geolocation client ✨ CODED
+### F2.1 IP Geolocation client ✔️ RELEASED
 
 - Dependencies:
   - F4.1 Typed HttpClient with sensible timeouts
@@ -161,7 +161,7 @@ Call ip-api.com to resolve latitude/longitude for the current IP.
   - [Design Document](./backlog/feat-geo-ip-client.design.md)
   - [Implementation Plan](./backlog/feat-geo-ip-client.plan.md)
 
-### F2.2 Weather API client ✨ CODED
+### F2.2 Weather API client ✔️ RELEASED
 
 - Dependencies:
   - F4.1 Typed HttpClient with sensible timeouts
@@ -176,7 +176,7 @@ Call Open‑Meteo to retrieve the current weather based on coordinates.
   - [Design Document](./backlog/feat-weather-client.design.md)
   - [Implementation Plan](./backlog/feat-weather-client.plan.md)
 
-### F2.3 Weather command handler ✨ CODED
+### F2.3 Weather command handler ✔️ RELEASED
 
 - Dependencies:
   - F1.2 Command routing and option validation
@@ -195,7 +195,7 @@ Implement the `weather` command to compose geolocation + weather, handle `--time
   - [Design Document](./backlog/feat-weather-command.design.md)
   - [Implementation Plan](./backlog/feat-weather-command.plan.md)
 
-### F2.4 Output formatting and units option ✨ CODED
+### F2.4 Output formatting and units option ✔️ RELEASED
 
 - Dependencies:
   - F2.3 Weather command handler
@@ -209,7 +209,7 @@ Provide human-friendly output and `--units` (metric|imperial) conversion.
   - [Design Document](./backlog/feat-weather-output.design.md)
   - [Implementation Plan](./backlog/feat-weather-output.plan.md)
 
-### F2.5 Raw JSON output option ✨ CODED
+### F2.5 Raw JSON output option ✔️ RELEASED
 
 - Dependencies:
   - F2.3 Weather command handler
@@ -227,7 +227,7 @@ Add `--raw` flag to print raw JSON from providers.
 
 - Make failures predictable and actionable.
 
-### F5.1 Exit code policy and mapping ✨ CODED
+### F5.1 Exit code policy and mapping ✔️ RELEASED
 
 - Dependencies:
   
@@ -241,7 +241,7 @@ Define exit code ranges for validation, network errors, and unexpected exception
   - [Design Document](./backlog/feat-exit-codes.design.md)
   - [Implementation Plan](./backlog/feat-exit-codes.plan.md)
 
-### F5.2 User-friendly error messages ✨ CODED
+### F5.2 User-friendly error messages ✔️ RELEASED
 
 - Dependencies:
   - F5.1 Exit code policy and mapping
