@@ -4,7 +4,7 @@ Follows the glossary of terms and concepts from AIDDbot Glossary.
 
 ## Overview
 
-Archetype CSharp CLI follows a layered CLI architecture, designed for simplicity, robustness, and developer experience with .NET platform conventions and Microsoft.Extensions.* libraries.
+Archetype CSharp CLI is a single-process console application (Presentation tier only). There are no separate service or data tiers; all logic executes within the CLI process. It is designed for simplicity, robustness, and great developer experience using .NET conventions and Microsoft.Extensions.* libraries. The CLI performs outbound HTTPS calls to public APIs.
 
 ## Presentation Tier
 
@@ -27,34 +27,11 @@ Archetype CSharp CLI follows a layered CLI architecture, designed for simplicity
 
 ## Application Tier
 
-### A2 Command/Service Layer
-
-**Purpose:** Encapsulates command handlers and reusable services (geolocation, weather) wired via DI and using typed HttpClient.
-
-**Technology Stack:**
-
-- Language: c-sharp
-- Framework: asp.net (hosting abstractions via Microsoft.Extensions)
-- Key Libraries: Microsoft.Extensions.DependencyInjection, System.Net.Http
-- Other Packages: Polly (optional), Serilog (optional)
-
-**Responsibilities:**
-
-- Implement command handlers (e.g., `weather`)
-- Coordinate calls to external APIs with resilience
-- Enforce business rules and map errors to exit codes
+Not applicable. There is no separate application/service tier; command handling and orchestration run inside the CLI application.
 
 ## Data Tier
 
-### D1 Local Configuration Store
-
-**Database Type:** n/a (file-based config)
-**Technology:** appsettings.json + environment variables
-
-**Responsibilities:**
-
-- Provide defaults and environment overrides
-- Supply HTTP timeouts, log levels, and feature flags
+Not applicable. No persistent data stores are used. The CLI reads transient configuration (appsettings.json and environment variables) at startup.
 
 ## Integration Patterns
 
@@ -88,19 +65,13 @@ Hardening:
 C4Container
   title Archetype CSharp CLI — Containers
   Person(dev, "Developer")
-  Container(cli, "CLI Application", "C#/.NET Console", "Parses commands, logs, config")
-  Container_Boundary(core, "Command/Service Layer") {
-    Container(handlers, "Command Handlers", "C#", "Implements commands")
-    Container(services, "Services", "C#", "Geo + Weather services, DI")
-  }
+  Container(cli, "CLI Application", "C#/.NET Console", "Parses commands, runs logic, logs, config")
   System_Ext(ipApi, "IP Geolocation API", "HTTPS/JSON")
   System_Ext(openMeteo, "Open‑Meteo API", "HTTPS/JSON")
 
   Rel(dev, cli, "Runs commands")
-  Rel(cli, handlers, "Dispatch")
-  Rel(handlers, services, "Calls")
-  Rel(services, ipApi, "GET /json", "HTTPS")
-  Rel(services, openMeteo, "GET /forecast", "HTTPS")
+  Rel(cli, ipApi, "GET /json", "HTTPS")
+  Rel(cli, openMeteo, "GET /forecast", "HTTPS")
 ```
 
 ## Additional Information
