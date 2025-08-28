@@ -40,6 +40,9 @@ public static class Log
     });
   }
 
+  /// <summary>
+  /// Parses a string into a LogLevel, defaulting to Information on invalid input.
+  /// </summary>
   private static LogLevel ParseLevel(string? value)
   {
     return Enum.TryParse<LogLevel>(value, true, out var lvl) ? lvl : LogLevel.Information;
