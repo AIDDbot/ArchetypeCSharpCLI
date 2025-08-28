@@ -29,16 +29,8 @@ public static class HttpClientExtensions
       if (!response.IsSuccessStatusCode)
       {
         var httpError = errorHandler.HandleHttpResponse(response);
-        // Update correlation ID to match the error handler's
-        var errorWithCorrelation = new HttpError(
-            httpError.Type,
-            httpError.Message,
-            httpError.ExitCode,
-            httpError.Exception,
-            correlationId);
-
-        logger.LogError("HTTP request failed: {Error}", errorWithCorrelation.ToString());
-        throw new HttpRequestException(errorWithCorrelation.Message, null, System.Net.HttpStatusCode.InternalServerError);
+        logger.LogError("HTTP request failed: {Error}", httpError.ToString());
+        throw new HttpRequestException(httpError.Message, null, response.StatusCode);
       }
 
       logger.LogDebug("HTTP request successful. Correlation ID: {CorrelationId}", correlationId);
@@ -48,7 +40,7 @@ public static class HttpClientExtensions
     {
       var httpError = errorHandler.HandleException(ex);
       logger.LogError("HTTP request failed: {Error}", httpError.ToString());
-      throw new HttpRequestException(httpError.Message, ex, System.Net.HttpStatusCode.InternalServerError);
+      throw new HttpRequestException(httpError.Message, ex, System.Net.HttpStatusCode.RequestTimeout);
     }
   }
 
@@ -72,16 +64,8 @@ public static class HttpClientExtensions
       if (!response.IsSuccessStatusCode)
       {
         var httpError = errorHandler.HandleHttpResponse(response);
-        // Update correlation ID to match the error handler's
-        var errorWithCorrelation = new HttpError(
-            httpError.Type,
-            httpError.Message,
-            httpError.ExitCode,
-            httpError.Exception,
-            correlationId);
-
-        logger.LogError("HTTP request failed: {Error}", errorWithCorrelation.ToString());
-        throw new HttpRequestException(errorWithCorrelation.Message, null, System.Net.HttpStatusCode.InternalServerError);
+        logger.LogError("HTTP request failed: {Error}", httpError.ToString());
+        throw new HttpRequestException(httpError.Message, null, response.StatusCode);
       }
 
       logger.LogDebug("HTTP request successful. Correlation ID: {CorrelationId}", correlationId);
@@ -91,7 +75,7 @@ public static class HttpClientExtensions
     {
       var httpError = errorHandler.HandleException(ex);
       logger.LogError("HTTP request failed: {Error}", httpError.ToString());
-      throw new HttpRequestException(httpError.Message, ex, System.Net.HttpStatusCode.InternalServerError);
+      throw new HttpRequestException(httpError.Message, ex, System.Net.HttpStatusCode.RequestTimeout);
     }
   }
 }
