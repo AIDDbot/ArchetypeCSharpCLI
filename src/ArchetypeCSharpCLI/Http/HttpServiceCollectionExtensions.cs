@@ -55,6 +55,13 @@ public static class HttpServiceCollectionExtensions
       });
     });
 
+    // Register GeoIP typed client
+    // Base address uses ip-api.com which exposes /json endpoint for caller IP
+    services.AddHttpClient<ArchetypeCSharpCLI.Http.GeoIp.IGeoIpClient, ArchetypeCSharpCLI.Http.GeoIp.GeoIpClient>(client =>
+    {
+      client.BaseAddress = new Uri("https://ip-api.com");
+    });
+
     return services;
   }
 
