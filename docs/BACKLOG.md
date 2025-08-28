@@ -85,7 +85,7 @@ Add Microsoft.Extensions.Logging console provider with levels and scopes; ensure
 Provide typed configuration binding for command options and services defaults.
 
 - Links:
-  - [Feature Specification](./feats/feat-config-binding.spec.md)
+  - [Feature Specification](./backlog/feat-config-binding.spec.md)
   - [Design Document](./feats/feat-config-binding.design.md)
   - [Implementation Plan](./feats/feat-config-binding.plan.md)
 
