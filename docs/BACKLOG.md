@@ -75,7 +75,7 @@ Add Microsoft.Extensions.Logging console provider with levels and scopes; ensure
   - [Implementation Plan](./backlog/feat-logging-console.plan.md)
   - Test status: ✅ Passed (xUnit) — console output levels, scopes, and defaults
 
-### F3.3 Bind typed options/POCOs 📝 PLANNED
+### F3.3 Bind typed options/POCOs ✔️ RELEASED
 
 - Dependencies:
   - F3.1 Configuration pipeline (appsettings + env)
@@ -88,6 +88,8 @@ Provide typed configuration binding for command options and services defaults.
   - [Feature Specification](./backlog/feat-config-binding.spec.md)
   - [Design Document](./backlog/feat-config-binding.design.md)
   - [Implementation Plan](./backlog/feat-config-binding.plan.md)
+  - Test status: ✅ Passed (xUnit) — binding, validation, env precedence, reload ([report](./backlog/feat-config-binding.test.md))
+  - Structure: [STRUCTURE.md](../STRUCTURE.md)
 
 ## E4 HTTP & Resilience ❗ High
 

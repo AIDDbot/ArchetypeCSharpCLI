@@ -15,8 +15,8 @@ public static class ConfigBuilder
 
     var builder = new ConfigurationBuilder()
       .SetBasePath(AppContext.BaseDirectory)
-      .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
-      .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: false)
+  .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+  .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true)
       .AddEnvironmentVariables();
 
     return builder.Build();
