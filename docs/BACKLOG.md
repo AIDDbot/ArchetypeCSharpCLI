@@ -70,9 +70,9 @@ Load appsettings.json, appsettings.{Environment}.json, and environment variables
 Add Microsoft.Extensions.Logging console provider with levels and scopes; ensure helpful defaults.
 
 - Links:
-  - [Feature Specification](./feats/feat-logging-console.spec.md)
-  - [Design Document](./feats/feat-logging-console.design.md)
-  - [Implementation Plan](./feats/feat-logging-console.plan.md)
+  - [Feature Specification](./backlog/feat-logging-console.spec.md)
+  - [Design Document](./backlog/feat-logging-console.design.md)
+  - [Implementation Plan](./backlog/feat-logging-console.plan.md)
   - Test status: ✅ Passed (xUnit) — console output levels, scopes, and defaults
 
 ### F3.3 Bind typed options/POCOs 📝 PLANNED
@@ -104,9 +104,9 @@ Provide typed configuration binding for command options and services defaults.
 Provide typed HttpClient registration, default timeout, and base handlers.
 
 - Links:
-  - [Feature Specification](./feats/feat-http-typed-client.spec.md)
-  - [Design Document](./feats/feat-http-typed-client.design.md)
-  - [Implementation Plan](./feats/feat-http-typed-client.plan.md)
+  - [Feature Specification](./backlog/feat-http-typed-client.spec.md)
+  - [Design Document](./backlog/feat-http-typed-client.design.md)
+  - [Implementation Plan](./backlog/feat-http-typed-client.plan.md)
 
 ### F4.2 Error handling and non-2xx mapping ⛔ BLOCKED
 
@@ -119,9 +119,9 @@ Provide typed HttpClient registration, default timeout, and base handlers.
 Handle timeouts, network errors, and non-2xx responses with clear messages and mapped exit codes.
 
 - Links:
-  - [Feature Specification](./feats/feat-http-error-handling.spec.md)
-  - [Design Document](./feats/feat-http-error-handling.design.md)
-  - [Implementation Plan](./feats/feat-http-error-handling.plan.md)
+  - [Feature Specification](./backlog/feat-http-error-handling.spec.md)
+  - [Design Document](./backlog/feat-http-error-handling.design.md)
+  - [Implementation Plan](./backlog/feat-http-error-handling.plan.md)
 
 ### F4.3 DTOs and mapping for external APIs ⛔ BLOCKED
 
@@ -133,9 +133,9 @@ Handle timeouts, network errors, and non-2xx responses with clear messages and m
 Define minimal DTOs for ip-api.com and open-meteo.com and map to internal models.
 
 - Links:
-  - [Feature Specification](./feats/feat-dto-mapping.spec.md)
-  - [Design Document](./feats/feat-dto-mapping.design.md)
-  - [Implementation Plan](./feats/feat-dto-mapping.plan.md)
+  - [Feature Specification](./backlog/feat-dto-mapping.spec.md)
+  - [Design Document](./backlog/feat-dto-mapping.design.md)
+  - [Implementation Plan](./backlog/feat-dto-mapping.plan.md)
 
 ## E2 Weather Experience ❗ High
 
@@ -152,9 +152,9 @@ Define minimal DTOs for ip-api.com and open-meteo.com and map to internal models
 Call ip-api.com to resolve latitude/longitude for the current IP.
 
 - Links:
-  - [Feature Specification](./feats/feat-geo-ip-client.spec.md)
-  - [Design Document](./feats/feat-geo-ip-client.design.md)
-  - [Implementation Plan](./feats/feat-geo-ip-client.plan.md)
+  - [Feature Specification](./backlog/feat-geo-ip-client.spec.md)
+  - [Design Document](./backlog/feat-geo-ip-client.design.md)
+  - [Implementation Plan](./backlog/feat-geo-ip-client.plan.md)
 
 ### F2.2 Weather API client ⛔ BLOCKED
 
@@ -167,9 +167,9 @@ Call ip-api.com to resolve latitude/longitude for the current IP.
 Call Open‑Meteo to retrieve the current weather based on coordinates.
 
 - Links:
-  - [Feature Specification](./feats/feat-weather-client.spec.md)
-  - [Design Document](./feats/feat-weather-client.design.md)
-  - [Implementation Plan](./feats/feat-weather-client.plan.md)
+  - [Feature Specification](./backlog/feat-weather-client.spec.md)
+  - [Design Document](./backlog/feat-weather-client.design.md)
+  - [Implementation Plan](./backlog/feat-weather-client.plan.md)
 
 ### F2.3 Weather command handler ⛔ BLOCKED
 
@@ -186,9 +186,9 @@ Call Open‑Meteo to retrieve the current weather based on coordinates.
 Implement the `weather` command to compose geolocation + weather, handle `--timeout`, and map errors to exit codes.
 
 - Links:
-  - [Feature Specification](./feats/feat-weather-command.spec.md)
-  - [Design Document](./feats/feat-weather-command.design.md)
-  - [Implementation Plan](./feats/feat-weather-command.plan.md)
+  - [Feature Specification](./backlog/feat-weather-command.spec.md)
+  - [Design Document](./backlog/feat-weather-command.design.md)
+  - [Implementation Plan](./backlog/feat-weather-command.plan.md)
 
 ### F2.4 Output formatting and units option ⛔ BLOCKED
 
@@ -200,9 +200,9 @@ Implement the `weather` command to compose geolocation + weather, handle `--time
 Provide human-friendly output and `--units` (metric|imperial) conversion.
 
 - Links:
-  - [Feature Specification](./feats/feat-weather-output.spec.md)
-  - [Design Document](./feats/feat-weather-output.design.md)
-  - [Implementation Plan](./feats/feat-weather-output.plan.md)
+  - [Feature Specification](./backlog/feat-weather-output.spec.md)
+  - [Design Document](./backlog/feat-weather-output.design.md)
+  - [Implementation Plan](./backlog/feat-weather-output.plan.md)
 
 ### F2.5 Raw JSON output option ⛔ BLOCKED
 
@@ -214,9 +214,9 @@ Provide human-friendly output and `--units` (metric|imperial) conversion.
 Add `--raw` flag to print raw JSON from providers.
 
 - Links:
-  - [Feature Specification](./feats/feat-weather-raw.spec.md)
-  - [Design Document](./feats/feat-weather-raw.design.md)
-  - [Implementation Plan](./feats/feat-weather-raw.plan.md)
+  - [Feature Specification](./backlog/feat-weather-raw.spec.md)
+  - [Design Document](./backlog/feat-weather-raw.design.md)
+  - [Implementation Plan](./backlog/feat-weather-raw.plan.md)
 
 ## E5 Exit Codes & Error Experience ❕ Normal
 
@@ -232,9 +232,9 @@ Add `--raw` flag to print raw JSON from providers.
 Define exit code ranges for validation, network errors, and unexpected exceptions.
 
 - Links:
-  - [Feature Specification](./feats/feat-exit-codes.spec.md)
-  - [Design Document](./feats/feat-exit-codes.design.md)
-  - [Implementation Plan](./feats/feat-exit-codes.plan.md)
+  - [Feature Specification](./backlog/feat-exit-codes.spec.md)
+  - [Design Document](./backlog/feat-exit-codes.design.md)
+  - [Implementation Plan](./backlog/feat-exit-codes.plan.md)
 
 ### F5.2 User-friendly error messages ⛔ BLOCKED
 
@@ -246,9 +246,9 @@ Define exit code ranges for validation, network errors, and unexpected exception
 Provide concise, actionable messages (hide stack traces in Release by default).
 
 - Links:
-  - [Feature Specification](./feats/feat-error-messages.spec.md)
-  - [Design Document](./feats/feat-error-messages.design.md)
-  - [Implementation Plan](./feats/feat-error-messages.plan.md)
+  - [Feature Specification](./backlog/feat-error-messages.spec.md)
+  - [Design Document](./backlog/feat-error-messages.design.md)
+  - [Implementation Plan](./backlog/feat-error-messages.plan.md)
 
 ## Additional Information
 
