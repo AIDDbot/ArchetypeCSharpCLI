@@ -66,8 +66,38 @@ public static class WeatherHandler
     }
 
     var report = weatherResult.Report!;
-    // Write human-friendly output
-    Console.WriteLine($"{report.Condition} — {report.Temperature} {report.Units} (observed at {report.ObservedAt:u})");
+    // Write enhanced human-friendly output with emojis and details
+    string tempEmoji = report.Temperature > 30 ? "🌡️" : report.Temperature < 10 ? "❄️" : "🌤️";
+    string windEmoji = "💨";
+    string humidityEmoji = "💧";
+    string conditionEmoji = GetConditionEmoji(report.Condition);
+    string windDir = GetWindDirection(report.WindDirection);
+    string humidityStr = report.Humidity >= 0 ? $"{humidityEmoji} Humidity: {report.Humidity}%" : "";
+
+    Console.WriteLine($"{conditionEmoji} Weather Report");
+    Console.WriteLine($"{tempEmoji} Temperature: {report.Temperature}°{(report.Units == "metric" ? "C" : "F")}");
+    Console.WriteLine($"{windEmoji} Wind: {report.WindSpeed} {(report.Units == "metric" ? "km/h" : "mph")} {windDir}");
+    if (!string.IsNullOrEmpty(humidityStr)) Console.WriteLine(humidityStr);
+    Console.WriteLine($"Observed at: {report.ObservedAt:u}");
+    Console.WriteLine($"Condition: {report.Condition}");
+    Console.WriteLine($"Source: {report.Source}");
     return ExitCodes.Success;
+
+    // Local helpers
+    static string GetConditionEmoji(string condition)
+    {
+      if (condition.Contains("rain", StringComparison.OrdinalIgnoreCase)) return "🌧️";
+      if (condition.Contains("cloud", StringComparison.OrdinalIgnoreCase)) return "☁️";
+      if (condition.Contains("clear", StringComparison.OrdinalIgnoreCase)) return "☀️";
+      if (condition.Contains("snow", StringComparison.OrdinalIgnoreCase)) return "❄️";
+      if (condition.Contains("storm", StringComparison.OrdinalIgnoreCase)) return "⛈️";
+      return "🌤️";
+    }
+    static string GetWindDirection(int degrees)
+    {
+      string[] dirs = { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
+      int idx = (int)Math.Round(((double)degrees % 360) / 45) % 8;
+      return dirs[idx];
+    }
   }
 }

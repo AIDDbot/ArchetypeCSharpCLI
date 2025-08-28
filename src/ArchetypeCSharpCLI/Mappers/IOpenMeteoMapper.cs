@@ -37,6 +37,10 @@ public class OpenMeteoMapper : IOpenMeteoMapper
     var temp = response.CurrentWeather.Temperature;
     var code = response.CurrentWeather.Weathercode;
     var time = response.CurrentWeather.Time;
+    var windSpeed = response.CurrentWeather.Windspeed;
+    var windDirection = (int)response.CurrentWeather.Winddirection;
+    // Humidity not present in OpenMeteoResponse, set to -1 (unknown)
+    int humidity = -1;
 
     if (double.IsNaN(temp))
       throw new InvalidOperationException("Temperature is required but was not provided by Open-Meteo.");
@@ -48,9 +52,11 @@ public class OpenMeteoMapper : IOpenMeteoMapper
 
     var temperature = (decimal)temp;
     var actualUnits = units;
+    var windSpeedValue = (decimal)windSpeed;
     if (units.Equals("imperial", StringComparison.OrdinalIgnoreCase))
     {
       temperature = CelsiusToFahrenheit(temperature);
+      windSpeedValue = windSpeedValue * 0.621371m; // km/h to mph
     }
     else
     {
@@ -64,7 +70,10 @@ public class OpenMeteoMapper : IOpenMeteoMapper
         units: actualUnits,
         condition: condition,
         observedAt: observedAt,
-        source: "open-meteo"
+        source: "open-meteo",
+        windSpeed: Math.Round(windSpeedValue, 1),
+        windDirection: windDirection,
+        humidity: humidity
     );
   }
 

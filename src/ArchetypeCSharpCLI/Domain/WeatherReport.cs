@@ -31,9 +31,24 @@ public class WeatherReport
   public string Source { get; }
 
   /// <summary>
+  /// Wind speed in km/h or mph.
+  /// </summary>
+  public decimal WindSpeed { get; }
+
+  /// <summary>
+  /// Wind direction in degrees.
+  /// </summary>
+  public int WindDirection { get; }
+
+  /// <summary>
+  /// Humidity percentage (0-100).
+  /// </summary>
+  public int Humidity { get; }
+
+  /// <summary>
   /// Initializes a new instance of the WeatherReport class.
   /// </summary>
-  public WeatherReport(decimal temperature, string units, string condition, DateTime observedAt, string source)
+  public WeatherReport(decimal temperature, string units, string condition, DateTime observedAt, string source, decimal windSpeed, int windDirection, int humidity)
   {
     if (string.IsNullOrWhiteSpace(units))
       throw new ArgumentException("Units cannot be null or empty.", nameof(units));
@@ -49,5 +64,8 @@ public class WeatherReport
     Condition = condition;
     ObservedAt = observedAt;
     Source = source;
+    WindSpeed = windSpeed;
+    WindDirection = windDirection;
+    Humidity = humidity;
   }
 }
