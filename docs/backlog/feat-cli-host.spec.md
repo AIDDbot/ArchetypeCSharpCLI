@@ -16,8 +16,8 @@ Provide a minimal, reliable CLI host with `--help` and `--version` so developers
 
 ### Acceptance Criteria
 
-- [ ] WHEN the user runs the CLI with `--help`, the system SHALL display usage, root description, and options.
-- [ ] WHEN no subcommands are implemented, the system SHALL present help for the root command.
+- [x] WHEN the user runs the CLI with `--help`, the system SHALL display usage, root description, and options.
+- [x] WHEN no subcommands are implemented, the system SHALL present help for the root command.
 
 ## User Story 2
 
@@ -27,8 +27,8 @@ Provide a minimal, reliable CLI host with `--help` and `--version` so developers
 
 ### Acceptance Criteria
 
-- [ ] WHEN the user passes `--version` or `-v`, the system SHALL print the semantic version and exit with code 0.
-- [ ] IF both `--help` and `--version` are provided, THEN the system SHALL show help (standard precedence) without error.
+- [x] WHEN the user passes `--version` or `-v`, the system SHALL print the semantic version and exit with code 0.
+- [x] IF both `--help` and `--version` are provided, THEN the system SHALL show help (standard precedence) without error.
 
 ## User Story 3
 
@@ -38,7 +38,7 @@ Provide a minimal, reliable CLI host with `--help` and `--version` so developers
 
 ### Acceptance Criteria
 
-- [ ] The system SHALL build with a supported LTS .NET SDK (8 or 9) and run `dotnet run -- --help` successfully.
-- [ ] The system SHALL use a command framework (System.CommandLine) to enable future subcommands and options.
+- [x] The system SHALL build with a supported LTS .NET SDK (8 or 9) and run `dotnet run -- --help` successfully.
+- [x] The system SHALL use a command framework (System.CommandLine) to enable future subcommands and options.
 
 > End of Feature Specification for F1.1, last updated 2025-08-28.

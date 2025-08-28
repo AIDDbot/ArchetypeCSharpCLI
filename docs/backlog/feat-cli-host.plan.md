@@ -16,7 +16,7 @@ Create a .NET console project with System.CommandLine, wire help and version, en
   - Add `global.json` to pin SDK version (8 or 9)
   - Add `.editorconfig` basic rules (optional in later tasks)
 - [x] 2. Add command framework dependency
-  - Add `Spectre.Console.Cli` PackageReference
+  - Add `System.CommandLine` PackageReference
 - [x] 3. Implement Program.cs
   - Create root command with description
   - Add `--version` (`-v`) option and handler to print version
@@ -24,5 +24,9 @@ Create a .NET console project with System.CommandLine, wire help and version, en
 - [x] 4. Build and smoke run
   - `dotnet build`
   - `dotnet run -- --help`
+
+- [x] 5. Add tests (xUnit)
+  - Process-level tests for `--help`, no-args default help, `--version`/`-v`, and help precedence
+  - Add to solution and ensure `dotnet test` passes
 
 > End of Feature Implementation Tasks for F1.1, last updated 2025-08-28.

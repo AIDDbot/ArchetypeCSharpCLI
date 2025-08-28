@@ -8,19 +8,21 @@
 
 - Minimal, reliable CLI host that everything else builds on.
   
-### F1.1 CLI host skeleton and help/version ✨ CODED
+### F1.1 CLI host skeleton and help/version ✔️ RELEASED
 
 - Dependencies:
   
 - Project Requirements:
   - R1 CLI Host and Basic Commands
 
-Provide a console entry point with `--help` and `--version`, wiring a command framework (System.CommandLine or Spectre.Console.Cli).
+Provide a console entry point with `--help` and `--version`, wiring a command framework (System.CommandLine).
 
 - Links:
   - [Feature Specification](./backlog/feat-cli-host.spec.md)
   - [Design Document](./backlog/feat-cli-host.design.md)
   - [Implementation Plan](./backlog/feat-cli-host.plan.md)
+  - Test status: ✅ Passed (xUnit) — process-level checks for help/version
+  - Structure: [STRUCTURE.md](../STRUCTURE.md)
 
 ### F1.2 Command routing and option validation ⏳ PENDING
 
