@@ -15,13 +15,12 @@ public static class HttpServiceCollectionExtensions
     configuration.Bind(temp);        // flat keys (e.g., HttpTimeoutSeconds)
     configuration.Bind("App", temp); // nested section overrides (e.g., App:HttpTimeoutSeconds)
 
-    var httpTimeout = temp.HttpTimeoutSeconds;
-    if (httpTimeout <= 0 || httpTimeout > 300) httpTimeout = 30;
-
     var normalized = new AppConfig
     {
       Environment = string.IsNullOrWhiteSpace(temp.Environment) ? "Production" : temp.Environment,
-      HttpTimeoutSeconds = httpTimeout,
+  // Preserve configured value (may be out of range); downstream clamp enforces [1,60].
+  // If not configured, AppConfig default (30) is used.
+  HttpTimeoutSeconds = temp.HttpTimeoutSeconds,
       LogLevel = string.IsNullOrWhiteSpace(temp.LogLevel) ? "Information" : temp.LogLevel
     };
 
