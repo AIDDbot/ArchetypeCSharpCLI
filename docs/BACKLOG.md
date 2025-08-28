@@ -227,7 +227,7 @@ Add `--raw` flag to print raw JSON from providers.
 
 - Make failures predictable and actionable.
 
-### F5.1 Exit code policy and mapping ✏️ DESIGNED
+### F5.1 Exit code policy and mapping 📝 PLANNED
 
 - Dependencies:
   
