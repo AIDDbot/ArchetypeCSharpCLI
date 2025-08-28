@@ -161,7 +161,7 @@ Call ip-api.com to resolve latitude/longitude for the current IP.
   - [Design Document](./backlog/feat-geo-ip-client.design.md)
   - [Implementation Plan](./backlog/feat-geo-ip-client.plan.md)
 
-### F2.2 Weather API client ⛔ BLOCKED
+### F2.2 Weather API client 📝 PLANNED
 
 - Dependencies:
   - F4.1 Typed HttpClient with sensible timeouts
