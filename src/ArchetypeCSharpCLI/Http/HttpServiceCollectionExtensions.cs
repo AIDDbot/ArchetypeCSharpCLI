@@ -58,15 +58,17 @@ public static class HttpServiceCollectionExtensions
     // Register GeoIP typed client
     // Base address uses ip-api.com which exposes /json endpoint for caller IP
     services.AddHttpClient<ArchetypeCSharpCLI.Http.GeoIp.IGeoIpClient, ArchetypeCSharpCLI.Http.GeoIp.GeoIpClient>(client =>
-    {
-      client.BaseAddress = new Uri("https://ip-api.com");
-    });
+      {
+        client.BaseAddress = new Uri("https://ip-api.com");
+      })
+    .AddHttpMessageHandler(() => new HttpLoggingHandler());
 
     // Register Open-Meteo typed client
     services.AddHttpClient<ArchetypeCSharpCLI.Http.Weather.IWeatherClient, ArchetypeCSharpCLI.Http.Weather.WeatherClient>(client =>
-    {
-      client.BaseAddress = new Uri("https://api.open-meteo.com");
-    });
+      {
+        client.BaseAddress = new Uri("https://api.open-meteo.com");
+      })
+    .AddHttpMessageHandler(() => new HttpLoggingHandler());
 
     return services;
   }

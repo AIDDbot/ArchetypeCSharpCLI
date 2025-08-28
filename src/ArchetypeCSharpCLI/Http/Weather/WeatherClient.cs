@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ArchetypeCSharpCLI.Dtos;
 using ArchetypeCSharpCLI.Domain;
 using ArchetypeCSharpCLI.Mappers;
+using System.Globalization;
 
 namespace ArchetypeCSharpCLI.Http.Weather;
 
@@ -25,7 +26,7 @@ public class WeatherClient : IWeatherClient
   {
     try
     {
-      var url = $"/v1/forecast?latitude={latitude}&longitude={longitude}&current_weather=true";
+      var url = $"/v1/forecast?latitude={latitude.ToString(CultureInfo.InvariantCulture)}&longitude={longitude.ToString(CultureInfo.InvariantCulture)}&current_weather=true";
       if (raw)
       {
         var text = await _http.GetStringAsync(url, ct).ConfigureAwait(false);
