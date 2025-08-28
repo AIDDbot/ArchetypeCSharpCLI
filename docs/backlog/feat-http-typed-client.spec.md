@@ -15,9 +15,9 @@ Provide a robust, minimal HTTP foundation using IHttpClientFactory with sane def
 
 ### Acceptance Criteria
 
-- [ ] The CLI SHALL register IHttpClientFactory and enable named/typed clients via DI at startup.
-- [ ] WHEN building the default HttpClient, the system SHALL set HttpClient.Timeout to AppConfig.HttpTimeoutSeconds seconds; WHERE the default is 30 if not configured.
-- [ ] IF AppConfig.HttpTimeoutSeconds is outside [1, 60], THEN the system SHALL clamp the effective timeout to the nearest bound within [1, 60].
+- [x] The CLI SHALL register IHttpClientFactory and enable named/typed clients via DI at startup.
+- [x] WHEN building the default HttpClient, the system SHALL set HttpClient.Timeout to AppConfig.HttpTimeoutSeconds seconds; WHERE the default is 30 if not configured.
+- [x] IF AppConfig.HttpTimeoutSeconds is outside [1, 60], THEN the system SHALL clamp the effective timeout to the nearest bound within [1, 60].
 
 ## User Story 2
 
@@ -27,9 +27,9 @@ Provide a robust, minimal HTTP foundation using IHttpClientFactory with sane def
 
 ### Acceptance Criteria
 
-- [ ] The CLI SHALL provide an extension method to wire HTTP defaults (e.g., AddHttpCore) that applies to all AddHttpClient registrations.
-- [ ] WHEN a typed client is registered via AddHttpClient<TClient, TImpl>, THEN it SHALL inherit the default timeout and headers from the core HTTP configuration.
-- [ ] The system SHALL set a default User-Agent header formatted as "ArchetypeCSharpCLI/{Version}" for all HttpClient instances.
+- [x] The CLI SHALL provide an extension method to wire HTTP defaults (e.g., AddHttpCore) that applies to all AddHttpClient registrations.
+- [x] WHEN a typed client is registered via AddHttpClient<TClient, TImpl>, THEN it SHALL inherit the default timeout and headers from the core HTTP configuration.
+- [x] The system SHALL set a default User-Agent header formatted as "ArchetypeCSharpCLI/{Version}" for all HttpClient instances.
 
 ## User Story 3
 
@@ -39,8 +39,8 @@ Provide a robust, minimal HTTP foundation using IHttpClientFactory with sane def
 
 ### Acceptance Criteria
 
-- [ ] WHEN AppConfig.HttpTimeoutSeconds is set via configuration files or environment variables, THEN the effective HttpClient timeout SHALL reflect that value (subject to clamping).
-- [ ] WHILE no explicit per-request timeout is provided by commands, the system SHALL rely on the HttpClient default timeout set from configuration.
-- [ ] WHERE environment-specific files (e.g., appsettings.Development.json) are present, the configured HttpTimeoutSeconds from those files SHALL apply before environment variable overrides.
+- [x] WHEN AppConfig.HttpTimeoutSeconds is set via configuration files or environment variables, THEN the effective HttpClient timeout SHALL reflect that value (subject to clamping).
+- [x] WHILE no explicit per-request timeout is provided by commands, the system SHALL rely on the HttpClient default timeout set from configuration.
+- [x] WHERE environment-specific files (e.g., appsettings.Development.json) are present, the configured HttpTimeoutSeconds from those files SHALL apply before environment variable overrides.
 
 > End of Feature Specification for F4.1, last updated 2025-08-28.
