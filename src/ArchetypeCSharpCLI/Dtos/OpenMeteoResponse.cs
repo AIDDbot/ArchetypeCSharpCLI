@@ -8,11 +8,11 @@ namespace ArchetypeCSharpCLI.Dtos;
 /// </summary>
 public class OpenMeteoResponse
 {
-    /// <summary>
-    /// Current weather conditions.
-    /// </summary>
-    [JsonPropertyName("current")]
-    public CurrentWeather? Current { get; set; }
+  /// <summary>
+  /// Current weather conditions.
+  /// </summary>
+  [JsonPropertyName("current")]
+  public CurrentWeather? Current { get; set; }
 }
 
 /// <summary>
@@ -20,21 +20,21 @@ public class OpenMeteoResponse
 /// </summary>
 public class CurrentWeather
 {
-    /// <summary>
-    /// Air temperature at 2 meters above ground in Celsius.
-    /// </summary>
-    [JsonPropertyName("temperature_2m")]
-    public decimal? Temperature2m { get; set; }
+  /// <summary>
+  /// Air temperature at 2 meters above ground in Celsius.
+  /// </summary>
+  [JsonPropertyName("temperature_2m")]
+  public decimal? Temperature2m { get; set; }
 
-    /// <summary>
-    /// WMO weather interpretation code.
-    /// </summary>
-    [JsonPropertyName("weather_code")]
-    public int? WeatherCode { get; set; }
+  /// <summary>
+  /// WMO weather interpretation code.
+  /// </summary>
+  [JsonPropertyName("weather_code")]
+  public int? WeatherCode { get; set; }
 
-    /// <summary>
-    /// ISO 8601 timestamp of the current weather observation.
-    /// </summary>
-    [JsonPropertyName("time")]
-    public string? Time { get; set; }
+  /// <summary>
+  /// ISO 8601 timestamp of the current weather observation.
+  /// </summary>
+  [JsonPropertyName("time")]
+  public string? Time { get; set; }
 }

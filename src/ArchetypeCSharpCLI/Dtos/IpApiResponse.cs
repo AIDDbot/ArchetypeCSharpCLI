@@ -8,33 +8,33 @@ namespace ArchetypeCSharpCLI.Dtos;
 /// </summary>
 public class IpApiResponse
 {
-    /// <summary>
-    /// Response status (success/fail).
-    /// </summary>
-    [JsonPropertyName("status")]
-    public string? Status { get; set; }
+  /// <summary>
+  /// Response status (success/fail).
+  /// </summary>
+  [JsonPropertyName("status")]
+  public string? Status { get; set; }
 
-    /// <summary>
-    /// Latitude in decimal degrees.
-    /// </summary>
-    [JsonPropertyName("lat")]
-    public decimal? Lat { get; set; }
+  /// <summary>
+  /// Latitude in decimal degrees.
+  /// </summary>
+  [JsonPropertyName("lat")]
+  public decimal? Lat { get; set; }
 
-    /// <summary>
-    /// Longitude in decimal degrees.
-    /// </summary>
-    [JsonPropertyName("lon")]
-    public decimal? Lon { get; set; }
+  /// <summary>
+  /// Longitude in decimal degrees.
+  /// </summary>
+  [JsonPropertyName("lon")]
+  public decimal? Lon { get; set; }
 
-    /// <summary>
-    /// City name.
-    /// </summary>
-    [JsonPropertyName("city")]
-    public string? City { get; set; }
+  /// <summary>
+  /// City name.
+  /// </summary>
+  [JsonPropertyName("city")]
+  public string? City { get; set; }
 
-    /// <summary>
-    /// Country name.
-    /// </summary>
-    [JsonPropertyName("country")]
-    public string? Country { get; set; }
+  /// <summary>
+  /// Country name.
+  /// </summary>
+  [JsonPropertyName("country")]
+  public string? Country { get; set; }
 }
