@@ -11,7 +11,7 @@
     <Description>Archetype CSharp CLI host</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Spectre.Console.Cli" Version="0.50.0" />
+  <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
