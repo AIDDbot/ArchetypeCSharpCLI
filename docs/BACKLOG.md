@@ -126,7 +126,7 @@ Handle timeouts, network errors, and non-2xx responses with clear messages and m
   - [Design Document](./backlog/feat-http-error-handling.design.md)
   - [Implementation Plan](./backlog/feat-http-error-handling.plan.md)
 
-### F4.3 DTOs and mapping for external APIs ⛪ SPECIFIED
+### F4.3 DTOs and mapping for external APIs ✏️ DESIGNED
 
 - Dependencies:
   - F4.1 Typed HttpClient with sensible timeouts
