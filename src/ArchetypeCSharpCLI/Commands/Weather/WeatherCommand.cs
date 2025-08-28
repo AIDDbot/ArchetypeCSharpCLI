@@ -19,6 +19,8 @@ public static class WeatherCommand
     cmd.AddOption(lat);
     cmd.AddOption(lon);
     cmd.AddOption(timeout);
+  cmd.AddOption(units);
+  cmd.AddOption(raw);
 
     cmd.SetHandler(async (decimal? latVal, decimal? lonVal, int? timeoutVal, string unitsVal, bool rawVal) =>
     {
@@ -29,7 +31,7 @@ public static class WeatherCommand
         Console.Error.WriteLine($"weather command failed with exit code {code}");
         Environment.ExitCode = code;
       }
-    }, lat, lon, timeout, units, raw);
+  }, lat, lon, timeout, units, raw);
 
     return cmd;
   }

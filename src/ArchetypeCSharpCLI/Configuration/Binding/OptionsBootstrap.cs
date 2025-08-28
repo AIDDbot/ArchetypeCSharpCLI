@@ -10,6 +10,12 @@ namespace ArchetypeCSharpCLI.Configuration.Binding;
 public static class OptionsBootstrap
 {
   private static IServiceProvider? _serviceProvider;
+  
+  /// <summary>
+  /// Exposes the built service provider for simple service location scenarios.
+  /// Returns null until <see cref="Init"/> has been called.
+  /// </summary>
+  public static IServiceProvider? Services => OptionsBootstrapAccessor.ServiceProvider;
 
   /// <summary>
   /// Initializes the options container using the provided configuration.

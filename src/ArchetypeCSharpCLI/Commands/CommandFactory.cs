@@ -29,23 +29,29 @@ public static class CommandFactory
         .CancelOnProcessTermination()
     .AddMiddleware(async (context, next) =>
         {
-          using var scope = Log.For("CLI").BeginScope("cmd={Command} args={Args}", context.ParseResult.CommandResult.Command.Name, string.Join(' ', context.ParseResult.Tokens.Select(t => t.Value)));
-          // Map parse/validation errors to a stable exit code before executing handlers
-          if (context.ParseResult.Errors.Count > 0)
-          {
-            // Print first parse error in a concise, user-friendly way
-            var firstError = context.ParseResult.Errors[0];
-            global::ArchetypeCSharpCLI.ErrorOutput.Write(firstError.Message);
-            context.ExitCode = global::ArchetypeCSharpCLI.ExitCodes.ValidationOrClientError;
-            return;
-          }
-          var argsContainHelp = context.ParseResult.Tokens.Any(t => t.Value is "--help" or "-h" or "-?");
-          var wantsVersion = context.ParseResult.GetValueForOption(versionLong) || context.ParseResult.GetValueForOption(versionShort);
+          var tokens = context.ParseResult.Tokens.Select(t => t.Value).ToArray();
+          using var scope = Log.For("CLI").BeginScope("cmd={Command} args={Args}", context.ParseResult.CommandResult.Command.Name, string.Join(' ', tokens));
 
+          // Determine intent from raw tokens to avoid blocking on parse errors
+          var argsContainHelp = tokens.Any(v => v is "--help" or "-h" or "-?");
+          var wantsVersion = tokens.Any(v => v is "--version" or "-v");
+
+          // Version takes precedence over other flags when not asking for help
           if (wantsVersion && !argsContainHelp)
           {
             Console.WriteLine(versionProvider());
             context.ExitCode = 0;
+            return;
+          }
+
+          // Map parse/validation errors to a stable exit code before executing handlers
+          if (context.ParseResult.Errors.Count > 0)
+          {
+            // Prefer the most informative error message for unknown tokens
+            var error = context.ParseResult.Errors.FirstOrDefault(e => e.Message.Contains("unrecognized", StringComparison.OrdinalIgnoreCase))
+                       ?? context.ParseResult.Errors[0];
+            global::ArchetypeCSharpCLI.ErrorOutput.Write(error.Message);
+            context.ExitCode = global::ArchetypeCSharpCLI.ExitCodes.ValidationOrClientError;
             return;
           }
           try
