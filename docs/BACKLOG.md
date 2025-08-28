@@ -60,7 +60,7 @@ Load appsettings.json, appsettings.{Environment}.json, and environment variables
   - Test status: ✅ Passed (xUnit) — precedence, defaults, and env overrides ([report](./backlog/feat-config-pipeline.test.md))
   - Structure: [STRUCTURE.md](../STRUCTURE.md)
 
-### F3.2 Structured console logging ⏳ PENDING
+### F3.2 Structured console logging ✨ CODED
 
 - Dependencies:
   

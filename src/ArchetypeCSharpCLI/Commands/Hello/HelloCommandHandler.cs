@@ -1,5 +1,8 @@
 using ArchetypeCSharpCLI.Commands.Hello;
 
+using ArchetypeCSharpCLI.Logging;
+using Microsoft.Extensions.Logging;
+
 namespace ArchetypeCSharpCLI.Commands.Hello;
 
 /// <summary>
@@ -14,6 +17,9 @@ public static class HelloCommandHandler
     /// <returns>Exit code (0 on success).</returns>
     public static Task<int> HandleAsync(HelloOptions opts)
     {
+    var logger = Log.For(typeof(HelloCommandHandler));
+    using var scope = logger.BeginScope("hello name={Name}", opts.Name);
+    logger.LogDebug("Handling hello command");
         Console.WriteLine($"Hello, {opts.Name}!");
         return Task.FromResult(0);
     }

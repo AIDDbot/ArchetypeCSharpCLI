@@ -2,6 +2,8 @@ using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 using ArchetypeCSharpCLI.Commands.Hello;
+using ArchetypeCSharpCLI.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace ArchetypeCSharpCLI.Commands;
 
@@ -20,12 +22,13 @@ public static class CommandFactory
         // subcommands
         root.AddCommand(BuildHelloCommand());
 
-        var builder = new CommandLineBuilder(root)
+      var builder = new CommandLineBuilder(root)
           .UseHelp()
           .UseParseErrorReporting()
           .CancelOnProcessTermination()
           .AddMiddleware(async (context, next) =>
           {
+          using var scope = Log.For("CLI").BeginScope("cmd={Command} args={Args}", context.ParseResult.CommandResult.Command.Name, string.Join(' ', context.ParseResult.Tokens.Select(t => t.Value)));
               var argsContainHelp = context.ParseResult.Tokens.Any(t => t.Value is "--help" or "-h" or "-?");
               var wantsVersion = context.ParseResult.GetValueForOption(versionLong) || context.ParseResult.GetValueForOption(versionShort);
 
@@ -62,7 +65,7 @@ public static class CommandFactory
         cmd.AddOption(nameOption);
 
         // Bind to HelloOptions and delegate to handler
-        cmd.SetHandler(async (string name) =>
+    cmd.SetHandler(async (string name) =>
         {
             var opts = new HelloOptions { Name = name };
             var code = await HelloCommandHandler.HandleAsync(opts);
