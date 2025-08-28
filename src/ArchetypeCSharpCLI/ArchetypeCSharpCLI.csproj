@@ -26,6 +26,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
   <Compile Include="ExitCodes.cs" />
+  <Compile Include="ErrorOutput.cs" />
   <Compile Include="Commands\**\*.cs" />
   <Compile Include="Configuration\**\*.cs" />
   <Compile Include="Http\**\*.cs" />

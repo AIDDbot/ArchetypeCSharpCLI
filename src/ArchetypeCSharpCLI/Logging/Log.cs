@@ -28,6 +28,10 @@ public static class Log
   private static ILoggerFactory CreateFactory()
   {
     var level = ParseLevel(AppSettings.Current.LogLevel);
+    if (Environment.GetEnvironmentVariable("AIDDBOT_VERBOSE") == "1")
+    {
+      level = LogLevel.Debug;
+    }
     return LoggerFactory.Create(builder =>
     {
       builder.SetMinimumLevel(level);

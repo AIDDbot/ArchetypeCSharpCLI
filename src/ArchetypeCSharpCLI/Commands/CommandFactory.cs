@@ -26,13 +26,16 @@ public static class CommandFactory
         .UseHelp()
         .UseParseErrorReporting()
         .CancelOnProcessTermination()
-        .AddMiddleware(async (context, next) =>
+    .AddMiddleware(async (context, next) =>
         {
           using var scope = Log.For("CLI").BeginScope("cmd={Command} args={Args}", context.ParseResult.CommandResult.Command.Name, string.Join(' ', context.ParseResult.Tokens.Select(t => t.Value)));
           // Map parse/validation errors to a stable exit code before executing handlers
           if (context.ParseResult.Errors.Count > 0)
           {
-            context.ExitCode = global::ArchetypeCSharpCLI.ExitCodes.ValidationOrClientError;
+      // Print first parse error in a concise, user-friendly way
+      var firstError = context.ParseResult.Errors[0];
+      global::ArchetypeCSharpCLI.ErrorOutput.Write(firstError.Message);
+      context.ExitCode = global::ArchetypeCSharpCLI.ExitCodes.ValidationOrClientError;
             return;
           }
           var argsContainHelp = context.ParseResult.Tokens.Any(t => t.Value is "--help" or "-h" or "-?");
@@ -50,6 +53,8 @@ public static class CommandFactory
           }
           catch (Exception)
           {
+            // Unexpected top-level failure: keep stderr concise
+            global::ArchetypeCSharpCLI.ErrorOutput.Write("An unexpected error occurred.");
             context.ExitCode = global::ArchetypeCSharpCLI.ExitCodes.Unexpected;
           }
         });
