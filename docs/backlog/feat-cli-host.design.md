@@ -2,7 +2,7 @@
 
 ## Overview
 
-Minimal .NET console app using System.CommandLine as the command framework. The root command provides description, `--version` (alias `-v`) and default help. No additional subcommands yet; structure anticipates future features (routing, config, logging).
+Minimal .NET console app using Spectre.Console.Cli as the command framework. The root command provides description, `--version` (alias `-v`) and default help. No additional subcommands yet; structure anticipates future features (routing, config, logging).
 
 ## Data Models
 
@@ -12,14 +12,14 @@ No domain data models are needed for this feature.
 
 ### Program (Entry Point)
 
-- Purpose: Build and run a System.CommandLine `RootCommand` with help and version options, map exit code.
+- Purpose: Build and run a Spectre.Console.Cli root command with help and version options, map exit code.
 - Interfaces: static `Task<int> Main(string[] args)`
 - Dependencies: System.CommandLine
 - Reuses: N/A
 
 ```csharp
 // Public API surface: Program.Main
-// Runs a CommandLineBuilder with Help, Version and default middleware.
+// Runs a Spectre CommandApp with a root command that supports --help and --version.
 ```
 
 ## User interface
