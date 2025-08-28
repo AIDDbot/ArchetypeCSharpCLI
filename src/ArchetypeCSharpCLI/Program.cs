@@ -4,6 +4,7 @@ using System.CommandLine.Parsing;
 using System.Reflection;
 using ArchetypeCSharpCLI.Commands;
 using ArchetypeCSharpCLI.Configuration;
+using ArchetypeCSharpCLI.Configuration.Binding;
 
 namespace ArchetypeCSharpCLI;
 
@@ -17,8 +18,12 @@ public static class Program
     /// <returns>Process exit code (0 for success; non-zero on failures).</returns>
     public static int Main(string[] args)
     {
-        // Initialize configuration early; safe no-op if files missing
-        _ = AppSettings.Current;
+    // Initialize configuration early; safe no-op if files missing
+    var rawConfig = ConfigBuilder.BuildRaw();
+    // Initialize options container (no specific types bound yet). Keeps future DI smooth.
+    OptionsBootstrap.Init(rawConfig);
+    // Preserve existing typed settings cache behavior
+    _ = AppSettings.Current;
         var parser = BuildParser();
         // Show help by default when no args are provided
         var argList = args is { Length: > 0 } ? args : new[] { "--help" };
