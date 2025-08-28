@@ -14,18 +14,18 @@ Implement the HTTP foundation using IHttpClientFactory with centralized defaults
 
 ## Tasks
 
-- [ ] 1. Add package reference for HttpClientFactory
+- [x] 1. Add package reference for HttpClientFactory
   - Edit `src/ArchetypeCSharpCLI/ArchetypeCSharpCLI.csproj`
   - Add `<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />`
 
-- [ ] 2. Include new Http folder in project build
+- [x] 2. Include new Http folder in project build
   - Edit `.csproj` and add `<Compile Include="Http\**\*.cs" />`
 
-- [ ] 3. Create VersionInfo helper
+- [x] 3. Create VersionInfo helper
   - Add `src/ArchetypeCSharpCLI/Http/VersionInfo.cs`
   - Implement `GetInformationalVersion()` using `AssemblyInformationalVersionAttribute` fallback to `AssemblyName.Version`
 
-- [ ] 4. Create HttpServiceCollectionExtensions
+- [x] 4. Create HttpServiceCollectionExtensions
   - Add `src/ArchetypeCSharpCLI/Http/HttpServiceCollectionExtensions.cs`
   - Implement `AddHttpCore(this IServiceCollection, IConfiguration)` overload (binds `AppConfig` and forwards)
   - Implement `AddHttpCore(this IServiceCollection, AppConfig)` overload
@@ -34,11 +34,11 @@ Implement the HTTP foundation using IHttpClientFactory with centralized defaults
     - Clamp timeout to [1, 60] using `AppConfig.HttpTimeoutSeconds`
     - Set `User-Agent` header to `ArchetypeCSharpCLI/{Version}` (ProductInfoHeaderValue)
 
-- [ ] 5. Wire AddHttpCore at startup
+- [x] 5. Wire AddHttpCore at startup
   - Edit `src/ArchetypeCSharpCLI/Program.cs`
   - In `OptionsBootstrap.Init(rawConfig, services => { ... })` call `services.AddHttpCore(rawConfig)`
 
-- [ ] 6. Ensure namespace and usings consistency
+- [x] 6. Ensure namespace and usings consistency
   - Use `ArchetypeCSharpCLI.Http` namespace for new files
   - Add necessary usings: `Microsoft.Extensions.DependencyInjection`, `Microsoft.Extensions.Http`, `System.Net.Http.Headers`, `System.Reflection`, `Microsoft.Extensions.Configuration`
 

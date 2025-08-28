@@ -21,7 +21,11 @@ public static class Program
     // Initialize configuration early; safe no-op if files missing
     var rawConfig = ConfigBuilder.BuildRaw();
     // Initialize options container (no specific types bound yet). Keeps future DI smooth.
-    OptionsBootstrap.Init(rawConfig);
+    OptionsBootstrap.Init(rawConfig, services =>
+    {
+      // Register HttpClientFactory and default HTTP settings based on AppConfig
+      ArchetypeCSharpCLI.Http.HttpServiceCollectionExtensions.AddHttpCore(services, rawConfig);
+    });
     // Preserve existing typed settings cache behavior
     _ = AppSettings.Current;
     var parser = BuildParser();
