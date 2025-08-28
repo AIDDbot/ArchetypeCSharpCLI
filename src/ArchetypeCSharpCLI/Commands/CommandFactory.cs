@@ -45,7 +45,7 @@ public static class CommandFactory
   {
     var cmd = new Command("hello", "Print a greeting for the provided name.");
 
-    var nameOption = new Option<string>(new[] {"--name", "-n"}, "Name to greet")
+    var nameOption = new Option<string>(new[] { "--name", "-n" }, "Name to greet")
     {
       IsRequired = true
     };
