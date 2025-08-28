@@ -1,17 +1,17 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Text.Json;
 using System.Threading;
 using ArchetypeCSharpCLI.Configuration.Binding;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using ArchetypeCSharpCLI.Tests.TestUtils;
 using Xunit;
 
 namespace ArchetypeCSharpCLI.Tests;
 
+[Collection("ConfigFiles")]
 public class ConfigBindingTests
 {
     private sealed class SampleOptions
@@ -25,26 +25,6 @@ public class ConfigBindingTests
         public string Mode { get; init; } = "basic";
     }
 
-    private sealed class EnvVarScope : IDisposable
-    {
-        private readonly (string key, string? prev)[] _pairs;
-        public EnvVarScope(params (string key, string? value)[] vars)
-        {
-            _pairs = new (string, string?)[vars.Length];
-            for (int i = 0; i < vars.Length; i++)
-            {
-                var (k, v) = vars[i];
-                _pairs[i] = (k, Environment.GetEnvironmentVariable(k));
-                Environment.SetEnvironmentVariable(k, v);
-            }
-        }
-        public void Dispose()
-        {
-            foreach (var (k, prev) in _pairs)
-                Environment.SetEnvironmentVariable(k, prev);
-        }
-    }
-
     private static IConfigurationRoot BuildConfigFromFiles()
     {
         // Mirrors ConfigBuilder.BuildRaw: base path + reloadOnChange enabled
@@ -53,38 +33,6 @@ public class ConfigBindingTests
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .AddEnvironmentVariables()
             .Build();
-    }
-
-    private sealed class TempSettingsFiles : IDisposable
-    {
-        private readonly string _baseDir = AppContext.BaseDirectory;
-        private string? _filePath;
-
-        public static TempSettingsFiles Create(object? appsettings)
-        {
-            var tsf = new TempSettingsFiles();
-            if (appsettings is not null)
-            {
-                var p = Path.Combine(tsf._baseDir, "appsettings.json");
-                File.WriteAllText(p, JsonSerializer.Serialize(appsettings));
-                tsf._filePath = p;
-            }
-            return tsf;
-        }
-
-        public static void Overwrite(object appsettings)
-        {
-            var p = Path.Combine(AppContext.BaseDirectory, "appsettings.json");
-            File.WriteAllText(p, JsonSerializer.Serialize(appsettings));
-        }
-
-        public void Dispose()
-        {
-            if (_filePath is not null && File.Exists(_filePath))
-            {
-                try { File.Delete(_filePath); } catch { /* ignore */ }
-            }
-        }
     }
 
     [Fact]
@@ -153,10 +101,7 @@ public class ConfigBindingTests
     public void Environment_Vars_Override_File()
     {
         using var _env = new EnvVarScope(("Sample__Threshold", "42"));
-        using var _files = TempSettingsFiles.Create(new
-        {
-            Sample = new { RequiredName = "alpha", Threshold = 10 }
-        });
+        using var _files = TempSettingsFiles.Create(new { Sample = new { RequiredName = "alpha", Threshold = 10 } });
 
         var configuration = BuildConfigFromFiles();
         var sp = OptionsBootstrap.Init(configuration, services =>

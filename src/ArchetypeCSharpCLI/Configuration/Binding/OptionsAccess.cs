@@ -10,9 +10,17 @@ public static class OptionsAccess
 {
   private static IServiceProvider? ServiceProvider => OptionsBootstrap.OptionsBootstrapAccessor.ServiceProvider;
 
-  public static IOptions<T> Get<T>() where T : class =>
-      ServiceProvider!.GetRequiredService<IOptions<T>>();
+  public static IOptions<T> Get<T>() where T : class
+  {
+      if (ServiceProvider is null)
+          throw new InvalidOperationException("OptionsBootstrap.Init must be called before accessing options.");
+      return ServiceProvider.GetRequiredService<IOptions<T>>();
+  }
 
-  public static IOptionsMonitor<T> GetMonitor<T>() where T : class =>
-      ServiceProvider!.GetRequiredService<IOptionsMonitor<T>>();
+  public static IOptionsMonitor<T> GetMonitor<T>() where T : class
+  {
+      if (ServiceProvider is null)
+          throw new InvalidOperationException("OptionsBootstrap.Init must be called before accessing options.");
+      return ServiceProvider.GetRequiredService<IOptionsMonitor<T>>();
+  }
 }
