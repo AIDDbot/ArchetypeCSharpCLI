@@ -223,6 +223,31 @@ Add `--raw` flag to print raw JSON from providers.
   - [Design Document](./backlog/feat-weather-raw.design.md)
   - [Implementation Plan](./backlog/feat-weather-raw.plan.md)
 
+
+### F2.6 Enhanced Human-Friendly Weather Report ⏳ PENDING
+
+- Dependencies:
+  - F2.3 Weather command handler
+  - F2.4 Output formatting and units option
+- Project Requirements:
+  - R2 Weather Command
+
+
+### F2.6 Enhanced Human-Friendly Weather Report ✔️ RELEASED
+
+- Improve the weather report output to be more human-friendly and visually engaging:
+  - Add emojis for weather conditions and units
+  - Display temperature, wind speed/direction, humidity, and other relevant metrics
+  - Format output for clarity and readability
+  - Maintain support for `--units` and `--raw` options
+
+- Links:
+  - [Feature Specification](./backlog/feat-weather-human-friendly.spec.md)
+  - [Design Document](./backlog/feat-weather-human-friendly.design.md)
+  - [Implementation Plan](./backlog/feat-weather-human-friendly.plan.md)
+  - [Implementation Tasks](./backlog/feat-weather-human-friendly.plan.md)
+  - Structure: [STRUCTURE.md](../STRUCTURE.md)
+
 ## E5 Exit Codes & Error Experience ❕ Normal
 
 - Make failures predictable and actionable.

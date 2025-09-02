@@ -18,9 +18,12 @@ Follows Screaming Architecture and Separation of Concerns principles.
 	│  │  │  └─ OptionsAccess.cs        # Static IOptions<T>/IOptionsMonitor<T> access
 │  │  └─ Commands/
 │  │     ├─ CommandFactory.cs       # Builds root parser and subcommands
-│  │     └─ Hello/
-│  │        ├─ HelloOptions.cs      # Input model for 'hello' command
-│  │        └─ HelloCommandHandler.cs # Handler for 'hello' behavior
+│  │     ├─ Hello/
+│  │     │  ├─ HelloOptions.cs      # Input model for 'hello' command
+│  │     │  └─ HelloCommandHandler.cs # Handler for 'hello' behavior
+│  │     └─ Weather/
+│  │        ├─ WeatherCommand.cs
+│  │        └─ WeatherHandler.cs     # Prints enhanced, emoji-rich weather report
 │  └─ ArchetypeCSharpCLI.Tests/      # Test project
 │     ├─ ArchetypeCSharpCLI.Tests.csproj
 │     ├─ CliHostTests.cs             # Host-level help/version tests
@@ -99,14 +102,14 @@ Configuration
 	│  │  ├─ Logging/
 	│  │  │  └─ Log.cs
 	│  │  ├─ Domain/
-	│  │  │  ├─ WeatherReport.cs
+	│  │  │  ├─ WeatherReport.cs        # Temperature, condition, wind, humidity fields
 	│  │  │  └─ Location.cs
 	│  │  ├─ Dtos/
 	│  │  │  ├─ OpenMeteoResponse.cs
 	│  │  │  └─ GeoIp/
 	│  │  │     └─ IpApiResponseDto.cs
 	│  │  └─ Mappers/
-	│  │     ├─ IOpenMeteoMapper.cs
+	│  │     ├─ IOpenMeteoMapper.cs     # Maps DTO to enriched WeatherReport (units conversion)
 	│  │     └─ IIpApiMapper.cs
 	│  └─ ArchetypeCSharpCLI.Tests/      # Test project
 	│     ├─ ArchetypeCSharpCLI.Tests.csproj
