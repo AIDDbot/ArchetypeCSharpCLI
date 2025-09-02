@@ -8,8 +8,23 @@ using ArchetypeCSharpCLI.Configuration.Binding;
 
 namespace ArchetypeCSharpCLI.Commands.Weather;
 
+/// <summary>
+/// Handles the 'weather' command execution. Resolves coordinates (GeoIP or provided),
+/// calls the weather client, and prints a human-friendly report including emojis,
+/// temperature, wind speed/direction, humidity (when available), condition, and timestamps.
+/// Respects the --units and --raw options.
+/// </summary>
 public static class WeatherHandler
 {
+  /// <summary>
+  /// Executes the weather command.
+  /// </summary>
+  /// <param name="lat">Optional latitude in decimal degrees.</param>
+  /// <param name="lon">Optional longitude in decimal degrees.</param>
+  /// <param name="timeoutSeconds">Optional timeout in seconds for the operation.</param>
+  /// <param name="units">Unit system (metric or imperial). Defaults to metric.</param>
+  /// <param name="raw">When true, prints the raw provider JSON instead of formatted output.</param>
+  /// <returns>Process exit code.</returns>
   public static async Task<int> HandleAsync(decimal? lat, decimal? lon, int? timeoutSeconds, string units = "metric", bool raw = false)
   {
     // Resolve services from a simple service locator available in OptionsBootstrap

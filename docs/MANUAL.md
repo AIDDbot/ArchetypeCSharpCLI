@@ -82,6 +82,21 @@ Options:
 - `--units <metric|imperial>` output units (default: metric)
 - `--raw` print raw provider JSON instead of human-friendly line
 
+Output:
+- Human-friendly multiline report with emojis and details: temperature, wind speed/direction, humidity (when available), condition, observation time and source.
+
+Example output (metric):
+
+```
+☀️ Weather Report
+🌡️ Temperature: 27.3°C
+💨 Wind: 12.5 km/h NE
+💧 Humidity: 58%
+Observed at: 2025-09-02 14:03:00Z
+Condition: Clear sky
+Source: open-meteo
+```
+
 ## Configuration
 
 Configuration precedence:
