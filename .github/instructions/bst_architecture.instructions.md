@@ -4,7 +4,7 @@ description: 'A synthesized guide for Software Architecture best practices.'
 
 # Software Architecture Best Practices
 
-This guide provides a clear and actionable instructions for developing robust, scalable, and maintainable applications. 
+This guide provides clear and actionable instructions for developing robust, scalable, and maintainable applications. 
 
 Follows the glossary of terms and concepts from [AIDDbot Glossary](./std_aidd-glossary.instructions.md)
 
@@ -12,8 +12,8 @@ These are the foundational principles that govern our architectural decisions.
 
 ## 1. Separation of Concerns (SoC)
 
--  Each _module_ of the system should have a distinct functional and technical responsibility. 
--  This is achieved by organizing code into _features and layers_.
+-  Each `module` of the `system` should have a distinct functional and technical responsibility. 
+-  This is achieved by organizing code into `features` and `layers`.
 
 
 | Layer↓ \ Feature→   | Users                   | Orders           | Logs                 |
@@ -25,7 +25,7 @@ These are the foundational principles that govern our architectural decisions.
 ## 2. Screaming Architecture
 
 - The folder structure should immediately reveal its purpose and business domain. 
-- We achieve this by _grouping by features_, not by layers or technical components.
+- We achieve this by grouping by `features`, not by `layers`.
 
 > Example for a TypeScript project
 
@@ -68,10 +68,12 @@ src/
     └── feature6/
 ```
 
+> "Scope Rules Structure": Code used by 2+ features goes to `shared`. Code used by 1 feature stays in `domain` or `core`.
+
 ## 3. Unidirectional Dependency Flow
 
-- Dependencies must flow in a single direction between _layers_. 
-- This is achieved with _discipline_ and/or enforced by tools.
+- Dependencies must flow in a single direction between layers, typically from higher-level layers (e.g., presentation) to lower-level layers (e.g., data access).
+- Given layers are not forced to be in folders, this rule is achieved with _discipline_ and/or enforced by tools.
 
 ```mermaid
 flowchart TD
@@ -81,7 +83,9 @@ flowchart TD
 
 ### _✨ Optional: Dependency Inversion Principle (DIP) for clean Architectures_
 
-- High-level layers (e.g., business logic) should not depend on low-level layers (e.g., data access). Both should depend on abstractions (interfaces).
+- High-level (business) modules should not depend on low-level (presentation and persistence) modules. 
+
+- All modules should depend on abstractions (interfaces or abstract classes).
 
 ```mermaid
 flowchart TD
@@ -92,12 +96,27 @@ flowchart TD
 
 - Frameworks should provide the necessary infrastructure to support this principle.
 
-## 4. Multi-repository solutions
+- If not, follow these steps:
 
-- Promote one repository setup per application to enhance tooling and development efficiency.
+1. Business layer defines interfaces for what it needs. 
+2. Persistence layer implements those interfaces.
+3. Presentation layer builds concrete classes that use these interfaces.
 
-- Link to parent repository where product documentation and backlog is defined.
+## 4. Repository Strategy
 
-### _✨ Optional: Monorepo_
+Choose your repository strategy based on team size, coupling requirements, and tooling needs:
 
-- When language choices are consistent across applications, a monorepo can simplify dependency management and code/documentation sharing.
+### Single Repository per Application (Default)
+- **When to use**: Independent applications with different release cycles
+- **Structure**: Each application has its own repository with links to shared documentation
+
+### Monorepo (When Appropriate)
+- **When to use**: Highly coupled applications, shared libraries, consistent tech stack
+- **Structure**: All applications and libraries are stored in a single repository.
+
+## 5. Error Handling and Resilience Patterns
+
+- Systems must be designed to handle failures gracefully and recover automatically when possible.
+- Error handling should be consistent across layers and features.
+- Implement defensive programming practices to prevent cascading failures.
+

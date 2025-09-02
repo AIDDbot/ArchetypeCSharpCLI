@@ -22,6 +22,7 @@ Generate comprehensive instruction files for each tech stack item specified in t
   - Application Frameworks
   - Production Libraries
   - Development Tools
+  - Services
 - [ ] Double-check the [/.github/instructions](../instructions) directory for existing instruction files
 - [ ] Create a list of missing instruction files needed for each technology item
 
@@ -42,7 +43,8 @@ Type can be:
 - `lng` for languages
 - `frm` for frameworks
 - `lib` for libraries
-- `dtl` for tools
+- `tol` for tools
+- `srv` for services
 
 Try to use simple examples and keep the instructions file concise, ideally under 250 lines.
 
