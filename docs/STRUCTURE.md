@@ -1,27 +1,29 @@
-## Project structure for Archetype CSharp CLI
+# Structure for Archetype CSharp CLI
 
-Overview
+## Overview
 
-Archetype CSharp CLI is a small, opinionated starter for building .NET command-line applications.
-It follows Screaming Architecture and Separation of Concerns: features grouped by domain under `src/`, with clear responsibilities for configuration, commands, HTTP clients, mappers and logging.
+Archetype CSharp CLI is an opinionated starter template for building .NET command-line applications.
+It groups code by feature/domain under `src/`, and uses Microsoft.Extensions patterns for configuration, options, logging and HttpClient integration.
 
-Bill of Materials
+## Bill of Materials
 
-- Language: C# 12 with nullable reference types enabled and implicit usings
-- Runtime & SDK: .NET 9 (net9.0). SDK pinned in `global.json` (9.0.304)
-- CLI framework: System.CommandLine (2.0.0-beta4)
-- Microsoft.Extensions.* packages for configuration, options and logging (v9)
-- Testing: xUnit + Microsoft.NET.Test.Sdk
+- **Language**: C# (nullable reference types enabled, implicit usings)
+- **Framework / Runtime**: .NET 9 (target: `net9.0`). SDK pinned in `global.json` (9.0.304)
+- **State Management**: N/A (no local database; in-memory/POCO domain models)
+- **Styling / UI**: N/A (command-line application)
+- **Testing**: xUnit + Microsoft.NET.Test.Sdk
+- **Build Tools**: .NET CLI (`dotnet build`, `dotnet test`, `dotnet publish`)
 
-Development / Deployment workflow
+### Development / Deployment workflow
 
-- Build locally: `dotnet build` (repo root) or `dotnet build src/ArchetypeCSharpCLI`.
-- Run CLI during development: `dotnet run --project src/ArchetypeCSharpCLI -- --help`.
-- Run tests: `dotnet test`.
-- Configuration precedence: `appsettings.json` -> `appsettings.{Environment}.json` -> Environment Variables. Use `DOTNET_ENVIRONMENT` / `ASPNETCORE_ENVIRONMENT` to select environment (default: Production).
-- Release: create a versioned build and produce a self-contained or framework-dependent artifact using `dotnet publish`.
+- Restore & build: `dotnet restore` && `dotnet build` (repo root) or target project folder.
+- Run locally: `dotnet run --project src/ArchetypeCSharpCLI -- --help` (or pass command args).
+- Test: `dotnet test` (runs test project `ArchetypeCSharpCLI.Tests`).
+- Configuration precedence: `appsettings.json` -> `appsettings.{Environment}.json` -> Environment Variables.
+- Environment selection: `DOTNET_ENVIRONMENT` / `ASPNETCORE_ENVIRONMENT` (default `Production`).
+- Release: `dotnet publish -c Release --self-contained false` (or produce self-contained binaries when needed).
 
-Folder structure
+## Folder Structure
 
 ```
 /(repo root)
@@ -30,11 +32,11 @@ Folder structure
 │  │  ├─ ArchetypeCSharpCLI.csproj
 │  │  ├─ Program.cs                   # Host and System.CommandLine wiring
 │  │  ├─ appsettings.json             # Default configuration (copied to output)
-│  │  ├─ Commands/                    # Domain commands and handlers
+│  │  ├─ Commands/                    # Domain commands and handlers (e.g. Weather)
 │  │  ├─ Configuration/               # Config builder, typed POCOs and binding helpers
-│  │  ├─ Http/                        # Http clients, extensions and version info
-│  │  ├─ Logging/                     # Logging helpers and console formatting
-│  │  ├─ Domain/                      # Domain models (e.g. WeatherReport, Location)
+│  │  ├─ Http/                        # Http clients, extensions and API clients
+│  │  ├─ Logging/                     # Console logging helpers
+│  │  ├─ Domain/                      # Domain models (WeatherReport, Location, ...)
 │  │  ├─ Dtos/                        # DTOs for external APIs
 │  │  └─ Mappers/                     # DTO -> Domain mappers
 │  └─ ArchetypeCSharpCLI.Tests/      # Unit and integration tests
@@ -45,47 +47,25 @@ Folder structure
 └─ LICENSE
 ```
 
-Key files
+## Key files
 
-- `src/ArchetypeCSharpCLI/ArchetypeCSharpCLI.csproj`: project file; target `net9.0`; references to System.CommandLine and Microsoft.Extensions packages.
-- `src/ArchetypeCSharpCLI/Program.cs`: application entry point, host and DI setup, root command wiring.
-- `src/ArchetypeCSharpCLI/appsettings.json`: default configuration values (Environment, HttpTimeoutSeconds, LogLevel).
-- `src/ArchetypeCSharpCLI/Commands/`: contains command definitions and handlers (e.g. Weather command).
-- `docs/PRD.md`, `docs/DOMAIN.md`, `docs/SYSTEMS.md`, `docs/BACKLOG.md`: existing project docs to guide feature work.
+- **`src/ArchetypeCSharpCLI/ArchetypeCSharpCLI.csproj`**: Project definition; target framework `net9.0`; package references include System.CommandLine and Microsoft.Extensions packages.
+- **`src/ArchetypeCSharpCLI/Program.cs`**: Application entry point; host creation, DI registration, and root command wiring via System.CommandLine.
+- **`src/ArchetypeCSharpCLI/appsettings.json`**: Default configuration values (e.g. `Environment`, `HttpTimeoutSeconds`, `LogLevel`).
 
-Configuration
+Other notable files:
 
-- Sources: `appsettings.json` -> `appsettings.{Environment}.json` -> Environment variables.
-- Environment selection: `DOTNET_ENVIRONMENT` or `ASPNETCORE_ENVIRONMENT` (default `Production`).
-- Environment variables support both flat keys (e.g. `HttpTimeoutSeconds`) and hierarchical keys using `__` (e.g. `App__HttpTimeoutSeconds`).
-- Typed binding helpers and options validation are provided by the `Configuration` feature in the codebase.
+- `docs/PRD.md`, `docs/DOMAIN.md`, `docs/SYSTEMS.md`, `docs/BACKLOG.md` — project documentation and backlog.
 
-Database and external services
-
-- There is no database in this archetype. The project includes HTTP client helpers and sample integrations (weather, geo-ip) under `Http/`.
-
-Components diagram (C4 - high level)
+## Components diagram
 
 ```mermaid
 C4Component
 Container(cli, "CLI host", ".NET 9", "Command-line host exposing commands via System.CommandLine")
-Container(http, "HTTP clients", "HttpClientFactory", "Typed HTTP clients with defaults and versioning")
+Container(http, "HTTP clients", "HttpClientFactory", "Typed HTTP clients with sensible defaults")
 Container(tests, "Tests", "xUnit", "Unit and integration tests for commands and wiring")
-Rel(cli, http, "calls")
-Rel(tests, cli, "executes for verification")
+Rel(cli, http, "calls HTTP APIs")
+Rel(tests, cli, "executes CLI and asserts behavior")
 ```
 
-How to run (developer quick steps)
-
-1. Install .NET 9 SDK (9.0.304 suggested per `global.json`).
-2. From repo root: `dotnet restore` then `dotnet build`.
-3. Run CLI: `dotnet run --project src/ArchetypeCSharpCLI -- --help`.
-4. Run tests: `dotnet test`.
-
-Notes
-
-- The repository follows the "screaming architecture" approach (feature-first folders under `src/`).
-- Use `Options` binding and `Microsoft.Extensions.*` patterns for configuration and logging.
-- For adding new features: create a new domain folder under `src/ArchetypeCSharpCLI` (e.g., `Orders/`) with commands, domain models, dtos and mappers.
-
-Last updated: 2025-09-02
+> End of STRUCTURE for Archetype CSharp CLI, last updated on 2025-09-02.
