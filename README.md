@@ -14,22 +14,13 @@ Archetype CSharp CLI is a starter template for building .NET command‑line appl
 
 
 ## Usage
-
+- Test
+  - `dotnet test`
 - Help
   - `dotnet run --project src/ArchetypeCSharpCLI -- --help`
 - Version
   - `dotnet run --project src/ArchetypeCSharpCLI -- --version`
   - `dotnet run --project src/ArchetypeCSharpCLI -- -v`
-
-## HTTP Defaults
-
-- The CLI registers `IHttpClientFactory` at startup and applies sane defaults via `AddHttpCore`.
-- Default timeout is `App:HttpTimeoutSeconds` (or `HttpTimeoutSeconds`) clamped to [1, 60]. Default is 30 seconds.
-- All `HttpClient` instances include `User-Agent: ArchetypeCSharpCLI/{InformationalVersion}`.
-- Override via configuration files or environment variables, e.g.:
-  - env var: `App__HttpTimeoutSeconds=10`
-  - `appsettings.Development.json` takes precedence over `appsettings.json`; environment variables override files.
-
 
 ## Author & Links
 
