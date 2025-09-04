@@ -32,7 +32,7 @@ To do your job you can run the appropriate prompts in the [prompts](/.github/pro
 
 Offer the user the following prompts to create missing documentation:
 
-- [/A_docs-PRD](/.github/prompts/A_docs-PRD.prompt.md): To generate a Product Requirements Document (PRD) for the new feature.
+- [/A_docs-PRD](/.github/prompts/A_docs-PRD.prompt.md): To generate a Product Requirements Document (PRD) for the whole product.
 
 - [/A_docs-DOMAIN](/.github/prompts/A_docs-DOMAIN.prompt.md): To generate a Domain Model Document for the domain problem.
 
@@ -41,6 +41,9 @@ Offer the user the following prompts to create missing documentation:
 - [/A_docs-BACKLOG](/.github/prompts/A_docs-BACKLOG.prompt.md): To generate a Backlog Document for the features list.
 
 - On legacy Brownfield scenarios we need to consider existing systems and their interactions.
+
+<!-- To Do: Brownfield prompt that generates all docs using reverse engineering -->
+<!-- To Do: Maintenance prompt to add new features or bugs to the backlog -->
 
 - [/A_docs-STRUCTURE](/.github/prompts/A_docs-STRUCTURE.prompt.md): To generate a Structure Document for the overall system architecture.
 
